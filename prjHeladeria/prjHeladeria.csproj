@@ -71,17 +71,93 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Clientes.aspx" />
+    <Content Include="css\bootstrap-theme.css" />
+    <Content Include="css\bootstrap-theme.min.css" />
+    <Content Include="css\bootstrap.css" />
+    <Content Include="css\bootstrap.min.css" />
+    <Content Include="css\templatemo-style.css" />
+    <Content Include="Default.aspx" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="ClientesListado.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="img\about-icon.png" />
+    <Content Include="img\about-image.png" />
+    <Content Include="img\close.png" />
+    <Content Include="img\contact-icon.png" />
+    <Content Include="img\first-bg.png" />
+    <Content Include="img\fourth-bg.png" />
+    <Content Include="img\home-icon.png" />
+    <Content Include="img\loading.gif" />
+    <Content Include="img\next.png" />
+    <Content Include="img\prev.png" />
+    <Content Include="img\project-item-01.jpg" />
+    <Content Include="img\project-item-02.jpg" />
+    <Content Include="img\project-item-03.jpg" />
+    <Content Include="img\project-item-04.jpg" />
+    <Content Include="img\project-item-05.jpg" />
+    <Content Include="img\project-item-06.jpg" />
+    <Content Include="img\project-item-07.jpg" />
+    <Content Include="img\projects-icon.png" />
+    <Content Include="img\right-home-image.png" />
+    <Content Include="img\second-bg.png" />
+    <Content Include="img\third-bg.png" />
+    <Content Include="js\main.js" />
+    <Content Include="js\plugins.js" />
+    <Content Include="js\vendor\bootstrap.js" />
+    <Content Include="js\vendor\bootstrap.min.js" />
+    <Content Include="js\vendor\jquery-1.11.2.min.js" />
+    <Content Include="js\vendor\modernizr-2.8.3-respond-1.4.2.min.js" />
+    <Content Include="js\vendor\npm.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BLL\CategoriaProducto.cs" />
+    <Compile Include="BLL\Clientes.cs" />
+    <Compile Include="BLL\Producto.cs" />
+    <Compile Include="BLL\Seguridad.cs" />
+    <Compile Include="Clientes.aspx.cs">
+      <DependentUpon>Clientes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Clientes.aspx.designer.cs">
+      <DependentUpon>Clientes.aspx</DependentUpon>
+    </Compile>
     <Compile Include="DAL\DAL.cs" />
+    <Compile Include="Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ClientesListado.aspx.cs">
+      <DependentUpon>ClientesListado.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ClientesListado.aspx.designer.cs">
+      <DependentUpon>ClientesListado.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Funciones.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Master.Master.cs">
+      <DependentUpon>Master.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Master.Master.designer.cs">
+      <DependentUpon>Master.Master</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="css\bootstrap-theme.css.map" />
+    <Content Include="css\bootstrap.css.map" />
+    <Content Include="Master.Master" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

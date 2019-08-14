@@ -42,7 +42,7 @@ namespace prjHeladeria.DAL
             try
             {
                 //Cadena Demo
-                cadena = "data source=sql10.freesqldatabase.com; username =sql10300279; password=Mw84A6UpfP;database=sql10300279; SslMode=none";
+                cadena = "data source=remotemysql.com; username =E622aCQVDc; password=G4uYzePsTa;database=E622aCQVDc; SslMode=none";
                 //cadena = "data source=MYSQL5016.site4now.net; username =db_a4240c_desa; password=rena4321;database=db_a4240c_doctor; SslMode=none";
                 //Bryan db_a4240c_desarr rena5566
                 //Mario db_a4240c_desa rena4321
@@ -206,9 +206,6 @@ namespace prjHeladeria.DAL
                     }
                     MySqlDataReader rdr = comandos.ExecuteReader();
 
-
-
-
                     var datos = new DataTable();
                     datos.Load(rdr);
                     foreach (DataRow row in datos.Rows)
@@ -321,9 +318,6 @@ namespace prjHeladeria.DAL
 
             }
         }
-
-
-
         //Metodo para hacer una consulta a una tabla. Devuelve un DataSet que sirve para llenar un DataTable, por eso el metodo
         //se llama fill_DataSet
         public DataSet fill_DataSet(string sql)
@@ -353,20 +347,20 @@ namespace prjHeladeria.DAL
             cm = new MySqlCommand(sql, cn);
             try
             {
-                cm.Connection.Open();
+                if (cm.Connection.State != ConnectionState.Open)
+                {
+                    cm.Connection.Open();
+                }                
                 int n = cm.ExecuteNonQuery();
                 cm.Connection.Close();
                 return n;
 
             }
             catch (Exception e)
-            {
-                //MessageBox.Show("Error al ejecutar el comando " + e.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            {                
                 cm.Connection.Close();
                 return -1;
-
             }
-
         }
 
         //----------------------------------------Transacciones--------------------------

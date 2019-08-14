@@ -1,0 +1,56 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Master.master.cs" Inherits="prjHeladeria.Master" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/templatemo-style.css">
+    <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+    <title>Heladería</title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <nav class="nav">
+        <div class="burger">
+            <div class="burger__patty"></div>
+        </div>
+
+        <ul class="nav__list">
+            <li class="nav__item">
+                <a href="#1" class="nav__link c-blue">
+                    <img src="img/home-icon.png" alt=""></a>
+            </li>
+            <li class="nav__item">
+                <a href="#2" class="nav__link c-yellow scrolly">
+                    <img src="img/about-icon.png" alt=""></a>
+            </li>
+            <li class="nav__item">
+                <a href="#3" class="nav__link c-red">
+                    <img src="img/projects-icon.png" alt=""></a>
+            </li>
+            <li class="nav__item">
+                <a href="#4" class="nav__link c-green">
+                    <img src="img/contact-icon.png" alt=""></a>
+            </li>
+        </ul>
+    </nav>
+    <script src="js/vendor/jquery-1.11.2.min.js"></script>
+    <form id="form1" runat="server">
+        <div>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+    </form>    
+    <script src="js/vendor/bootstrap.min.js"></script>
+    <script src="js/plugins.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
