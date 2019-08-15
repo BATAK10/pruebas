@@ -32,8 +32,8 @@ namespace prjHeladeria.BLL
                 _TipoDeOperacion = value;
             }
         }
-        private int _CodigoCategoriaProducto;
-        public int CodigoCategoriaProducto
+        private string _CodigoCategoriaProducto;
+        public string CodigoCategoriaProducto
         {
             get
             {
@@ -81,7 +81,7 @@ namespace prjHeladeria.BLL
             }
             if (_TipoDeOperacion == 3 || _TipoDeOperacion == 2) // Editar o Eliminar
             {
-                if (_CodigoCategoriaProducto == 0)
+                if (_CodigoCategoriaProducto == "0")
                 {
                     _Mensaje += "Ingrese el código de categoría producto";
                     _Resultado = false;
@@ -112,16 +112,20 @@ namespace prjHeladeria.BLL
                 {
                     if (_TipoDeOperacion == 1)
                     {
+                        // Obtener código de categoria_producto siguiente
+                        Funciones _f = new Funciones();
+                        int codigoCategoriaProducto= (int)_f.Consultar(int.Parse(_CodigoCategoriaProducto), "IFNULL(max(id_categoria_producto),0) + 1", "categoria_producto", "", "", "");
                         resultadoQuery = _Conectar.ejecutarComando("insert into categoria_producto values ("
-                            + _CodigoCategoriaProducto + ","
-                            + _NombreCategoriaProducto + ","                            
-                            + _EstadoCategoriaProducto);
+                            + codigoCategoriaProducto + ","
+                            + "'"+_NombreCategoriaProducto + "',"                            
+                            + _EstadoCategoriaProducto
+                            +")");
                     }
                     if (_TipoDeOperacion == 2)
                     {
                         resultadoQuery = _Conectar.ejecutarComando("update categoria_producto set nombre_categoria_producto = '" +
                             _NombreCategoriaProducto + "', estado_categoria_producto='"                                                        
-                            + _EstadoCategoriaProducto + " where id_categoria_producto = "
+                            + _EstadoCategoriaProducto + "' where id_categoria_producto = "
                             + _CodigoCategoriaProducto);
                     }
                     if (_TipoDeOperacion == 3)

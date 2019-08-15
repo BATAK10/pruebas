@@ -32,8 +32,8 @@ namespace prjHeladeria.BLL
                 _TipoDeOperacion = value;
             }
         }
-        private int _CodigoProducto;
-        public int CodigoProducto
+        private string _CodigoProducto;
+        public string CodigoProducto
         {
             get
             {
@@ -118,7 +118,7 @@ namespace prjHeladeria.BLL
             }
             if (_TipoDeOperacion == 3 || _TipoDeOperacion == 2) // Editar o Eliminar
             {
-                if (_CodigoProducto == 0)
+                if (_CodigoProducto == "0")
                 {
                     _Mensaje += "Ingrese el código de producto";
                     _Resultado = false;
@@ -165,22 +165,26 @@ namespace prjHeladeria.BLL
                 {
                     if (_TipoDeOperacion == 1)
                     {
+                        // Obtener código de categoria_producto siguiente
+                        Funciones _f = new Funciones();
+                        int codigoProducto = (int)_f.Consultar(int.Parse(_CodigoProducto), "IFNULL(max(id_producto),0) + 1", "producto", "", "", "");
                         resultadoQuery = _Conectar.ejecutarComando("insert into producto values ("
-                            + _CodigoProducto + ","
-                            + _NombreProducto + ","
+                            + codigoProducto + ","
+                            +"'"+ _NombreProducto + "',"
                             + _CostoProducto + ","
                             + _CantidadStock+ ","
                             + _CodigoCategoriaProducto + ","
-                            + _EstadoProducto);
+                            + _EstadoProducto
+                            +")");
                     }
                     if (_TipoDeOperacion == 2)
                     {
                         resultadoQuery = _Conectar.ejecutarComando("update producto set nombre_producto = '"
-                            + _NombreProducto + "', costo_producto='"
-                            + _CostoProducto + "', cantidad_stock='"
-                            + _CantidadStock + "', codigo_categoria_producto='"
-                            + _CodigoCategoriaProducto + "', estado_producto='"
-                            + _EstadoProducto + " where id_producto = "
+                            + _NombreProducto + "', costo_producto="
+                            + _CostoProducto + ", cantidad_producto="
+                            + _CantidadStock + ", id_categoria_producto="
+                            + _CodigoCategoriaProducto + ", estado_producto='"
+                            + _EstadoProducto + "' where id_producto = "
                             + _CodigoProducto);
                     }
                     if (_TipoDeOperacion == 3)

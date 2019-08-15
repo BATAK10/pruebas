@@ -71,6 +71,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="CategoriaProducto.aspx" />
+    <Content Include="CategoriaProductoListado.aspx" />
     <Content Include="Clientes.aspx" />
     <Content Include="css\bootstrap-theme.css" />
     <Content Include="css\bootstrap-theme.min.css" />
@@ -88,6 +90,7 @@
     <Content Include="img\first-bg.png" />
     <Content Include="img\fourth-bg.png" />
     <Content Include="img\home-icon.png" />
+    <Content Include="img\load.gif" />
     <Content Include="img\loading.gif" />
     <Content Include="img\next.png" />
     <Content Include="img\prev.png" />
@@ -102,6 +105,7 @@
     <Content Include="img\right-home-image.png" />
     <Content Include="img\second-bg.png" />
     <Content Include="img\third-bg.png" />
+    <Content Include="js\funciones.js" />
     <Content Include="js\main.js" />
     <Content Include="js\plugins.js" />
     <Content Include="js\vendor\bootstrap.js" />
@@ -109,6 +113,8 @@
     <Content Include="js\vendor\jquery-1.11.2.min.js" />
     <Content Include="js\vendor\modernizr-2.8.3-respond-1.4.2.min.js" />
     <Content Include="js\vendor\npm.js" />
+    <Content Include="Producto.aspx" />
+    <Content Include="ProductoListado.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -116,6 +122,20 @@
     <Compile Include="BLL\Clientes.cs" />
     <Compile Include="BLL\Producto.cs" />
     <Compile Include="BLL\Seguridad.cs" />
+    <Compile Include="CategoriaProducto.aspx.cs">
+      <DependentUpon>CategoriaProducto.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CategoriaProducto.aspx.designer.cs">
+      <DependentUpon>CategoriaProducto.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CategoriaProductoListado.aspx.cs">
+      <DependentUpon>CategoriaProductoListado.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CategoriaProductoListado.aspx.designer.cs">
+      <DependentUpon>CategoriaProductoListado.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Clientes.aspx.cs">
       <DependentUpon>Clientes.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -148,6 +168,20 @@
     </Compile>
     <Compile Include="Master.Master.designer.cs">
       <DependentUpon>Master.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Producto.aspx.cs">
+      <DependentUpon>Producto.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Producto.aspx.designer.cs">
+      <DependentUpon>Producto.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ProductoListado.aspx.cs">
+      <DependentUpon>ProductoListado.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProductoListado.aspx.designer.cs">
+      <DependentUpon>ProductoListado.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

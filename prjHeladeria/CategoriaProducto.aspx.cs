@@ -9,7 +9,7 @@ using System.Web.UI.WebControls;
 
 namespace prjHeladeria
 {
-    public partial class Clientes : System.Web.UI.Page
+    public partial class CategoriaProducto : System.Web.UI.Page
     {
         // Tipos de operaciones 1 insertar 2 modificar 3 eliminar 4 consultar
         //Instancias
@@ -20,8 +20,7 @@ namespace prjHeladeria
         public string _MensajeDeError = "";
         public string _MensajeSatisfactorio = "";
         public string _Operacion = "";
-        private string _CodigoCliente = "";
-        
+        private string _CodigoCategoriaProducto = "";
         protected void Page_Load(object sender, EventArgs e)
         {
             try
@@ -34,9 +33,9 @@ namespace prjHeladeria
                 //    Response.Redirect("ErrorPermisos.aspx");
                 //}
 
-                if (Request.QueryString["idc"] != null)
+                if (Request.QueryString["icp"] != null)
                 {
-                    _CodigoCliente = Request.QueryString["idc"];
+                    _CodigoCategoriaProducto = Request.QueryString["icp"];
                 }
                 _Operacion = Request.QueryString["o"];
                 if (!IsPostBack)
@@ -44,22 +43,18 @@ namespace prjHeladeria
                     if (_Operacion != "1")
                     {
                         //se carga la info
-                        if (_CodigoCliente == "")
+                        if (_CodigoCategoriaProducto == "")
                         {
                             _MensajeDeError = "Parametro no encontrado";
                         }
                         else
                         {
-                            dtDatos = (DataTable)CargarDatos.Consultar(dtDatos, "id_cliente, nombre_cliente, apellido_cliente, telefono_cliente, direccion_cliente, estado_cliente", "cliente", "id_cliente,=," + _CodigoCliente, "", "");
+                            dtDatos = (DataTable)CargarDatos.Consultar(dtDatos, "id_categoria_producto, nombre_categoria_producto, estado_categoria_producto", "categoria_producto", "id_categoria_producto,=," + _CodigoCategoriaProducto, "", "");
                             if (dtDatos.Rows.Count > 0)
                             {
-                                txtIdCliente.Value = dtDatos.Rows[0]["id_cliente"].ToString();
-                                //ObtenerImagen
-                                txtNombreCliente.Value = dtDatos.Rows[0]["nombre_cliente"].ToString();
-                                txtApellidoCliente.Value = dtDatos.Rows[0]["apellido_cliente"].ToString();
-                                txtTelefonoCliente.Value = dtDatos.Rows[0]["telefono_cliente"].ToString();
-                                txtDireccionCliente.Value = dtDatos.Rows[0]["direccion_cliente"].ToString();
-                                cmbEstadoCliente.Value = dtDatos.Rows[0]["estado_cliente"].ToString();
+                                txtIdCategoriaProducto.Value = dtDatos.Rows[0]["id_categoria_producto"].ToString();
+                                txtNombreCategoriaProducto.Value = dtDatos.Rows[0]["nombre_categoria_producto"].ToString();
+                                cmbEstadoCategoriaProducto.Value = dtDatos.Rows[0]["estado_categoria_producto"].ToString();
                             }
                             else
                             {
@@ -75,7 +70,7 @@ namespace prjHeladeria
                     // para eliminar se bloquean los campos menos botones
                     if (_Operacion == "3")
                     {
-                        Inhabilitar();                        
+                        Inhabilitar();
                     }
                 }
             }
@@ -84,55 +79,45 @@ namespace prjHeladeria
                 _MensajeDeError = ex.Message;
             }
         }
-
         private void limpiar()
         {
-            txtIdCliente.Value = "";
-            txtNombreCliente.Value = "";
-            txtApellidoCliente.Value = "";
-            txtTelefonoCliente.Value = "";
-            txtDireccionCliente.Value = "";
-            cmbEstadoCliente.SelectedIndex = 0;
+            txtIdCategoriaProducto.Value = "";
+            txtNombreCategoriaProducto.Value = "";
+            cmbEstadoCategoriaProducto.SelectedIndex = 0;
         }
         private void Inhabilitar()
         {
-            txtIdCliente.Disabled = true;
-            txtNombreCliente.Disabled = true;
-            txtApellidoCliente.Disabled = true;
-            txtTelefonoCliente.Disabled = true;
-            txtDireccionCliente.Disabled = true;
-            cmbEstadoCliente.Disabled = true;
+            txtIdCategoriaProducto.Disabled = true;
+            txtNombreCategoriaProducto.Disabled = true;
+            cmbEstadoCategoriaProducto.Disabled = true;
         }
         [WebMethod]
-        public static string OperarCliente(string operacion, string id_cliente, string nombre_cliente, string apellido_cliente, string telefono_cliente, string direccion_cliente, string estado_cliente)
+        public static string OperarCategoriaProducto(string operacion, string id_categoria_producto, string nombre_categoria_producto, string estado_categoria_producto)
         {
             string _Mensaje = "";
             try
             {
-                BLL.Clientes _Cliente = new BLL.Clientes();
+                BLL.CategoriaProducto _CategoriaProducto = new BLL.CategoriaProducto();
                 string _Operacion = operacion;
                 if (_Operacion != "")
                 {
-                    _Cliente.CodigoCliente = "1";
-                    _Cliente.NombreCliente = nombre_cliente;
-                    _Cliente.ApellidoCliente = apellido_cliente;
-                    _Cliente.TelefonoCliente = telefono_cliente;
-                    _Cliente.DireccionCliente = direccion_cliente;
-                    _Cliente.EstadoCliente = estado_cliente;
-                    _Cliente.TipoDeOperacion = int.Parse(_Operacion);
+                    _CategoriaProducto.CodigoCategoriaProducto = "1";
+                    _CategoriaProducto.NombreCategoriaProducto = nombre_categoria_producto;
+                    _CategoriaProducto.EstadoCategoriaProducto = estado_categoria_producto;
+                    _CategoriaProducto.TipoDeOperacion = int.Parse(_Operacion);
 
                     if (_Operacion != "1")
                     {
-                        _Cliente.CodigoCliente = id_cliente;
-                    }                    
-                    if (_Cliente.OperarCliente())
+                        _CategoriaProducto.CodigoCategoriaProducto = id_categoria_producto;
+                    }
+                    if (_CategoriaProducto.OperarCategoriaProducto())
                     {
 
                         _Mensaje = "Operación exitosa";
                     }
                     else
                     {
-                        _Mensaje = "Error: " + _Cliente.Mensaje;
+                        _Mensaje = "Error: " + _CategoriaProducto.Mensaje;
                     }
                 }
             }
