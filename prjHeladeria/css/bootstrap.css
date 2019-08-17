@@ -2387,13 +2387,13 @@ output {
 .form-control::-webkit-input-placeholder {
   color: #999;
 }
-.form-control[disabled],
-.form-control[readonly],
-fieldset[disabled] .form-control {
-  cursor: not-allowed;
-  background-color: dimgray;
-  opacity: 1;
-}
+    .form-control[disabled],
+    .form-control[readonly],
+    fieldset[disabled] .form-control {
+        cursor: not-allowed;
+        background-color: darkgray;
+        opacity: 1;
+    }
 textarea.form-control {
   height: auto;
 }
@@ -3833,8 +3833,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .navbar {
   position: relative;
-  min-height: 50px;
-  margin-bottom: 20px;
+  min-height: 50px;  
   border: 1px solid transparent;
 }
 @media (min-width: 768px) {

@@ -8,7 +8,7 @@
         <button type="button" onclick="window.open('CategoriaProductoListado.aspx','_self')" class="btn">Listado</button>
     </div>
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-10">
             <div class="contat-form">
                 <form id="contact" action="#" method="post">
                     <fieldset>
@@ -24,7 +24,6 @@
                             <option value="2">Inactivo</option>
                         </select>
                     </fieldset>
-                    <br />
                     <fieldset>
                         <button type="button" id="form-submit" onclick="OperarCategoriaProducto()" class="btn">Guardar</button>
                         <button type="button" id="form-cancel" onclick="window.open('CategoriaProductoListado.aspx','_self')" class="btn">Cancelar</button>
@@ -57,7 +56,7 @@
                 $("#form-submit").attr("disabled", "disabled")
             }
         });
-        function OperarCategoriaProducto() {            
+        function OperarCategoriaProducto() {
             $(".alert-danger").hide();
             $(".alert-success").hide();
             var operacion = "<%=_Operacion%>";
@@ -76,10 +75,12 @@
             if (mensaje != "") {
                 $(".alert-danger").html(mensaje);
                 $(".alert-danger").show();
+                scrollTo(".alert-danger");
                 hideLoader(200);
             } else {
                 var dataValue = {
                     "operacion": operacion,
+                    "usuario": "<%=Request.Cookies["usuario"].Value.ToString()%>",
                     "id_categoria_producto": id_categoria_producto,
                     "nombre_categoria_producto": nombre_categoria_producto,
                     "estado_categoria_producto": estado_categoria_producto

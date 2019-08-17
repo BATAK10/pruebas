@@ -8,7 +8,7 @@
         <button type="button" onclick="window.open('ClientesListado.aspx','_self')" class="btn">Listado</button>
     </div>
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-10">
             <div class="contat-form">
                 <form id="contact" action="#" method="post">
                     <fieldset>
@@ -33,7 +33,6 @@
                             <option value="2">Inactivo</option>
                         </select>
                     </fieldset>
-                    <br />
                     <fieldset>
                         <button type="button" id="form-submit" onclick="OperarCliente()" class="btn">Guardar</button>
                         <button type="button" id="form-cancel" onclick="window.open('ClientesListado.aspx','_self')" class="btn">Cancelar</button>
@@ -92,10 +91,12 @@
             if (mensaje != "") {
                 $(".alert-danger").html(mensaje);
                 $(".alert-danger").show();
+                scrollTo(".alert-danger");
                 hideLoader(200);
             } else {
                 var dataValue = {
                     "operacion": operacion,
+                    "usuario": "<%=Request.Cookies["usuario"].Value.ToString()%>",
                     "id_cliente": id_cliente,
                     "nombre_cliente": nombre_cliente,
                     "apellido_cliente": apellido_cliente,

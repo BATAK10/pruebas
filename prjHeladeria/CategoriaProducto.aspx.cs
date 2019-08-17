@@ -21,18 +21,22 @@ namespace prjHeladeria
         public string _MensajeSatisfactorio = "";
         public string _Operacion = "";
         private string _CodigoCategoriaProducto = "";
+        public string _usuario = "";
         protected void Page_Load(object sender, EventArgs e)
         {
             try
             {
-                //string Usuario = Request.Cookies["CodigoUsuario"].Value.ToString();
-                //string Permisos = Request.Cookies["Permisos"].Value;
-                //string Permiso = "1";
-                //if (Permisos.Contains(Permiso + ".") != true)
-                //{
-                //    Response.Redirect("ErrorPermisos.aspx");
-                //}
-
+                if (Request.Cookies["usuario"] == null)
+                {
+                    Response.Redirect("Login.aspx");
+                }
+                else
+                {
+                    if (Request.Cookies["usuario"].Value == "" || Request.Cookies["usuario"].Value == null)
+                        Response.Redirect("Login.aspx");
+                    else
+                        _usuario = Request.Cookies["usuario"].Value;
+                }
                 if (Request.QueryString["icp"] != null)
                 {
                     _CodigoCategoriaProducto = Request.QueryString["icp"];
@@ -49,7 +53,7 @@ namespace prjHeladeria
                         }
                         else
                         {
-                            dtDatos = (DataTable)CargarDatos.Consultar(dtDatos, "id_categoria_producto, nombre_categoria_producto, estado_categoria_producto", "categoria_producto", "id_categoria_producto,=," + _CodigoCategoriaProducto, "", "");
+                            dtDatos = (DataTable)CargarDatos.Consultar(dtDatos, "id_categoria_producto, nombre_categoria_producto, estado_categoria_producto", "categoria_producto", "id_categoria_producto,=," + _CodigoCategoriaProducto+ ";usuario,=," + _usuario, "", "");
                             if (dtDatos.Rows.Count > 0)
                             {
                                 txtIdCategoriaProducto.Value = dtDatos.Rows[0]["id_categoria_producto"].ToString();
@@ -92,7 +96,7 @@ namespace prjHeladeria
             cmbEstadoCategoriaProducto.Disabled = true;
         }
         [WebMethod]
-        public static string OperarCategoriaProducto(string operacion, string id_categoria_producto, string nombre_categoria_producto, string estado_categoria_producto)
+        public static string OperarCategoriaProducto(string operacion, string usuario, string id_categoria_producto, string nombre_categoria_producto, string estado_categoria_producto)
         {
             string _Mensaje = "";
             try
@@ -104,6 +108,7 @@ namespace prjHeladeria
                     _CategoriaProducto.CodigoCategoriaProducto = "1";
                     _CategoriaProducto.NombreCategoriaProducto = nombre_categoria_producto;
                     _CategoriaProducto.EstadoCategoriaProducto = estado_categoria_producto;
+                    _CategoriaProducto.Usuario = usuario;
                     _CategoriaProducto.TipoDeOperacion = int.Parse(_Operacion);
 
                     if (_Operacion != "1")
@@ -123,7 +128,7 @@ namespace prjHeladeria
             }
             catch (Exception ex)
             {
-                _Mensaje = ex.Message;
+                _Mensaje = "Error: "+ex.Message;
             }
             return _Mensaje;
         }

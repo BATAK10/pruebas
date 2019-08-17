@@ -21,17 +21,22 @@ namespace prjHeladeria
         public string _MensajeSatisfactorio = "";
         public string _Operacion = "";
         private string _CodigoProducto = "";
+        public string _usuario = "";
         protected void Page_Load(object sender, EventArgs e)
         {
             try
             {
-                //string Usuario = Request.Cookies["CodigoUsuario"].Value.ToString();
-                //string Permisos = Request.Cookies["Permisos"].Value;
-                //string Permiso = "1";
-                //if (Permisos.Contains(Permiso + ".") != true)
-                //{
-                //    Response.Redirect("ErrorPermisos.aspx");
-                //}
+                if (Request.Cookies["usuario"] == null)
+                {
+                    Response.Redirect("Login.aspx");
+                }
+                else
+                {
+                    if (Request.Cookies["usuario"].Value == "" || Request.Cookies["usuario"].Value == null)
+                        Response.Redirect("Login.aspx");
+                    else
+                        _usuario = Request.Cookies["usuario"].Value;
+                }
 
                 if (Request.QueryString["idp"] != null)
                 {
@@ -41,7 +46,7 @@ namespace prjHeladeria
                 if (!IsPostBack)
                 {
                     // Traer las categorias
-                    dtCategoriaProducto = (DataTable)CargarDatos.Consultar(dtCategoriaProducto, "id_categoria_producto, nombre_categoria_producto", "categoria_producto", "", "", "");
+                    dtCategoriaProducto = (DataTable)CargarDatos.Consultar(dtCategoriaProducto, "id_categoria_producto, nombre_categoria_producto", "categoria_producto", "usuario,=," + _usuario, "", "");
                     if (dtCategoriaProducto.Rows.Count > 0)
                     {
                         ListItem _PrimeraOpcionPaciente = new ListItem("Seleccione categoria", "0");
@@ -61,7 +66,7 @@ namespace prjHeladeria
                         }
                         else
                         {                            
-                            dtDatos = (DataTable)CargarDatos.Consultar(dtDatos, "id_producto, nombre_producto, costo_producto, cantidad_producto, id_categoria_producto, estado_producto", "producto", "id_producto,=," + _CodigoProducto, "", "");
+                            dtDatos = (DataTable)CargarDatos.Consultar(dtDatos, "id_producto, nombre_producto, costo_producto, cantidad_producto, id_categoria_producto, estado_producto", "producto", "id_producto,=," + _CodigoProducto+ ";usuario,=," + _usuario, "", "");
                             if (dtDatos.Rows.Count > 0)
                             {
                                 txtIdProducto.Value = dtDatos.Rows[0]["id_producto"].ToString();
@@ -113,7 +118,7 @@ namespace prjHeladeria
             cmbEstadoProducto.Disabled = true;
         }
         [WebMethod]
-        public static string OperarProducto(string operacion, string id_producto, string nombre_producto, string costo_producto, string cantidad_producto, string id_categoria_producto, string estado_producto)
+        public static string OperarProducto(string operacion,string usuario, string id_producto, string nombre_producto, string costo_producto, string cantidad_producto, string id_categoria_producto, string estado_producto)
         {
             string _Mensaje = "";
             try
@@ -128,6 +133,7 @@ namespace prjHeladeria
                     _Producto.CantidadStock = cantidad_producto;
                     _Producto.CodigoCategoriaProducto = id_categoria_producto;
                     _Producto.EstadoProducto = estado_producto;
+                    _Producto.Usuario = usuario;
                     _Producto.TipoDeOperacion = int.Parse(_Operacion);
 
                     if (_Operacion != "1")
@@ -147,7 +153,7 @@ namespace prjHeladeria
             }
             catch (Exception ex)
             {
-                _Mensaje = ex.Message;
+                _Mensaje = "Error: "+ex.Message;
             }
             return _Mensaje;
         }

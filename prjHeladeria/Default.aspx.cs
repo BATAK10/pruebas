@@ -9,9 +9,20 @@ namespace prjHeladeria
 {
     public partial class Default : System.Web.UI.Page
     {
+        public string usuario = "";
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (Request.Cookies["usuario"] == null)
+            {
+                Response.Redirect("Login.aspx");
+            }
+            else
+            {
+                if (Request.Cookies["usuario"].Value == "" || Request.Cookies["usuario"].Value == null)
+                    Response.Redirect("Login.aspx");
+                else
+                    usuario = Request.Cookies["usuario"].Value;
+            }
         }
     }
 }

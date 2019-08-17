@@ -8,12 +8,12 @@ using System.Web.UI.WebControls;
 
 namespace prjHeladeria
 {
-    public partial class frmClientesListado : System.Web.UI.Page
+    public partial class VentaListado : System.Web.UI.Page
     {
         public string _Mensaje = "";
         public DataTable dtDatos = new DataTable();
-        Funciones CargarDatos = new Funciones();
         public string _usuario = "";
+        Funciones CargarDatos = new Funciones();
         protected void Page_Load(object sender, EventArgs e)
         {
             try
@@ -29,13 +29,14 @@ namespace prjHeladeria
                     else
                         _usuario = Request.Cookies["usuario"].Value;
                 }
-                dtDatos = (DataTable)CargarDatos.Consultar(dtDatos, "id_cliente,nombre_cliente,apellido_cliente,telefono_cliente,direccion_cliente, CASE WHEN estado_cliente = 1 THEN 'ACTIVO' WHEN estado_cliente = 2 THEN 'INACTIVO' END AS estado_cliente", "cliente", "usuario,=," + _usuario, "", "");
-                dgvListadoClientes.DataSource = dtDatos;
-                dgvListadoClientes.DataBind();
+
+                dtDatos = (DataTable)CargarDatos.Consultar(dtDatos, "id_venta, nombre_cliente, fecha_venta, fecha_entrega_venta, costo_total_venta,CASE WHEN estado_venta= 1 THEN 'Pendiente' WHEN estado_venta= 2 THEN 'Entregado' END AS estado_venta", "venta ven inner join cliente cli on ven.id_cliente_venta = cli.id_cliente and ven.usuario = cli.usuario", "ven.usuario,=," + _usuario, "", "");
+                dgvListadoVenta.DataSource = dtDatos;
+                dgvListadoVenta.DataBind();
             }
             catch (Exception ex)
             {
-                _Mensaje = "Error: "+ex.Message;
+                _Mensaje = "Error: " + ex.Message;
             }
         }
     }

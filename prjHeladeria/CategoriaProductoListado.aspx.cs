@@ -13,17 +13,29 @@ namespace prjHeladeria
         public string _Mensaje = "";
         public DataTable dtDatos = new DataTable();
         Funciones CargarDatos = new Funciones();
+        public string _usuario = "";
         protected void Page_Load(object sender, EventArgs e)
         {
             try
             {
-                dtDatos = (DataTable)CargarDatos.Consultar(dtDatos, "id_categoria_producto,nombre_categoria_producto,CASE WHEN estado_categoria_producto= 1 THEN 'ACTIVO' WHEN estado_categoria_producto= 2 THEN 'INACTIVO' END AS estado_categoria_producto", "categoria_producto", "", "", "");
+                if (Request.Cookies["usuario"] == null)
+                {
+                    Response.Redirect("Login.aspx");
+                }
+                else
+                {
+                    if (Request.Cookies["usuario"].Value == "" || Request.Cookies["usuario"].Value == null)
+                        Response.Redirect("Login.aspx");
+                    else
+                        _usuario = Request.Cookies["usuario"].Value;
+                }
+                dtDatos = (DataTable)CargarDatos.Consultar(dtDatos, "id_categoria_producto,nombre_categoria_producto,CASE WHEN estado_categoria_producto= 1 THEN 'ACTIVO' WHEN estado_categoria_producto= 2 THEN 'INACTIVO' END AS estado_categoria_producto", "categoria_producto", "usuario,=," + _usuario, "", "");
                 dgvListadoCategoriaProducto.DataSource = dtDatos;
                 dgvListadoCategoriaProducto.DataBind();
             }
             catch (Exception ex)
             {
-                _Mensaje = ex.Message;
+                _Mensaje = "Error: "+ex.Message;
             }
         }
     }

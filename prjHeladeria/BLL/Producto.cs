@@ -104,7 +104,18 @@ namespace prjHeladeria.BLL
                 _CantidadStock = value;
             }
         }
-
+        private string _Usuario;
+        public string Usuario
+        {
+            get
+            {
+                return _Usuario;
+            }
+            set
+            {
+                _Usuario = value;
+            }
+        }
         #endregion
         #region Metodos
         public bool ValidarProducto()
@@ -144,9 +155,18 @@ namespace prjHeladeria.BLL
                     _Mensaje += "Ingrese el costo del producto con un valor mayor a 0. "; _Resultado = false;
                 }
             }
+            int cantidadStock = 0;
+            if (!int.TryParse(_CantidadStock, out cantidadStock))
+            {
+                _Mensaje += "Ingrese la cantidad en stock del producto con un valor numérico. "; _Resultado = false;
+            }
             if (_CodigoCategoriaProducto == "0" || _CodigoCategoriaProducto == "")
             {
                 _Mensaje += "Ingrese el cógido de categoría de producto. "; _Resultado = false;
+            }
+            if (_Usuario == "")
+            {
+                _Mensaje += "Ingrese el usuario. "; _Resultado = false;
             }
             return _Resultado;
         }
@@ -170,12 +190,13 @@ namespace prjHeladeria.BLL
                         int codigoProducto = (int)_f.Consultar(int.Parse(_CodigoProducto), "IFNULL(max(id_producto),0) + 1", "producto", "", "", "");
                         resultadoQuery = _Conectar.ejecutarComando("insert into producto values ("
                             + codigoProducto + ","
-                            +"'"+ _NombreProducto + "',"
+                            + "'" + _NombreProducto + "',"
                             + _CostoProducto + ","
-                            + _CantidadStock+ ","
+                            + _CantidadStock + ","
                             + _CodigoCategoriaProducto + ","
-                            + _EstadoProducto
-                            +")");
+                            + _EstadoProducto + ", '"
+                            + _Usuario
+                            + "')");
                     }
                     if (_TipoDeOperacion == 2)
                     {

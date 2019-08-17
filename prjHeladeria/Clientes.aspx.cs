@@ -15,25 +15,28 @@ namespace prjHeladeria
         //Instancias
         private DataTable dtDatos = new DataTable();
         private DataTable dtEstado = new DataTable();
-        Funciones CargarDatos = new Funciones();        
+        Funciones CargarDatos = new Funciones();
         //variables
         public string _MensajeDeError = "";
         public string _MensajeSatisfactorio = "";
         public string _Operacion = "";
         private string _CodigoCliente = "";
-        
+        public string _usuario = "";
         protected void Page_Load(object sender, EventArgs e)
         {
             try
             {
-                //string Usuario = Request.Cookies["CodigoUsuario"].Value.ToString();
-                //string Permisos = Request.Cookies["Permisos"].Value;
-                //string Permiso = "1";
-                //if (Permisos.Contains(Permiso + ".") != true)
-                //{
-                //    Response.Redirect("ErrorPermisos.aspx");
-                //}
-
+                if (Request.Cookies["usuario"] == null)
+                {
+                    Response.Redirect("Login.aspx");
+                }
+                else
+                {
+                    if (Request.Cookies["usuario"].Value == "" || Request.Cookies["usuario"].Value == null)
+                        Response.Redirect("Login.aspx");
+                    else
+                        _usuario = Request.Cookies["usuario"].Value;
+                }
                 if (Request.QueryString["idc"] != null)
                 {
                     _CodigoCliente = Request.QueryString["idc"];
@@ -50,7 +53,7 @@ namespace prjHeladeria
                         }
                         else
                         {
-                            dtDatos = (DataTable)CargarDatos.Consultar(dtDatos, "id_cliente, nombre_cliente, apellido_cliente, telefono_cliente, direccion_cliente, estado_cliente", "cliente", "id_cliente,=," + _CodigoCliente, "", "");
+                            dtDatos = (DataTable)CargarDatos.Consultar(dtDatos, "id_cliente, nombre_cliente, apellido_cliente, telefono_cliente, direccion_cliente, estado_cliente", "cliente", "id_cliente,=," + _CodigoCliente + ";usuario,=," + _usuario, "", "");
                             if (dtDatos.Rows.Count > 0)
                             {
                                 txtIdCliente.Value = dtDatos.Rows[0]["id_cliente"].ToString();
@@ -75,7 +78,7 @@ namespace prjHeladeria
                     // para eliminar se bloquean los campos menos botones
                     if (_Operacion == "3")
                     {
-                        Inhabilitar();                        
+                        Inhabilitar();
                     }
                 }
             }
@@ -104,7 +107,7 @@ namespace prjHeladeria
             cmbEstadoCliente.Disabled = true;
         }
         [WebMethod]
-        public static string OperarCliente(string operacion, string id_cliente, string nombre_cliente, string apellido_cliente, string telefono_cliente, string direccion_cliente, string estado_cliente)
+        public static string OperarCliente(string operacion, string usuario, string id_cliente, string nombre_cliente, string apellido_cliente, string telefono_cliente, string direccion_cliente, string estado_cliente)
         {
             string _Mensaje = "";
             try
@@ -119,12 +122,13 @@ namespace prjHeladeria
                     _Cliente.TelefonoCliente = telefono_cliente;
                     _Cliente.DireccionCliente = direccion_cliente;
                     _Cliente.EstadoCliente = estado_cliente;
+                    _Cliente.Usuario = usuario;
                     _Cliente.TipoDeOperacion = int.Parse(_Operacion);
 
                     if (_Operacion != "1")
                     {
                         _Cliente.CodigoCliente = id_cliente;
-                    }                    
+                    }
                     if (_Cliente.OperarCliente())
                     {
 
@@ -138,7 +142,7 @@ namespace prjHeladeria
             }
             catch (Exception ex)
             {
-                _Mensaje = ex.Message;
+                _Mensaje = "Error: "+ex.Message;
             }
             return _Mensaje;
         }

@@ -105,6 +105,18 @@ namespace prjHeladeria.BLL
                 _EstadoCliente = value;
             }
         }
+        private string _Usuario;
+        public string Usuario
+        {
+            get
+            {
+                return _Usuario;
+            }
+            set
+            {
+                _Usuario = value;
+            }
+        }
         #endregion
         #region Metodos
         public bool ValidarCliente()
@@ -155,6 +167,10 @@ namespace prjHeladeria.BLL
                     }
                 }
             }
+            if (_Usuario == "")
+            {
+                _Mensaje += "Ingrese el usuario. "; _Resultado = false;
+            }
             return _Resultado;
         }
 
@@ -175,13 +191,15 @@ namespace prjHeladeria.BLL
                         // Obtener código de cliente siguiente
                         Funciones _f = new Funciones();
                         int codigoCliente = (int)_f.Consultar(int.Parse(_CodigoCliente), "IFNULL(max(id_cliente),0) + 1", "cliente", "", "", "");
-                        resultadoQuery = _Conectar.ejecutarComando("insert into cliente (id_cliente, nombre_cliente, apellido_cliente, telefono_cliente, direccion_cliente, estado_cliente) values ("
+                        resultadoQuery = _Conectar.ejecutarComando("insert into cliente (id_cliente, nombre_cliente, apellido_cliente, telefono_cliente, direccion_cliente, estado_cliente, usuario) values ("
                             + codigoCliente + ","
                             + "'" + _NombreCliente + "' ,"
                             + "'" + _ApellidoCliente + "',"
                             + _TelefonoCliente + ","
                             + "'" + _DireccionCliente + "',"
-                            + _EstadoCliente + ")");
+                            + _EstadoCliente
+                            + ",'" + _Usuario
+                            + "')");
                     }
                     if (_TipoDeOperacion == 2)
                     {

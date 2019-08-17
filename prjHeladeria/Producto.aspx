@@ -92,10 +92,12 @@
             if (mensaje != "") {
                 $(".alert-danger").html(mensaje);
                 $(".alert-danger").show();
+                scrollTo(".alert-danger");
                 hideLoader(200);
             } else {
                 var dataValue = {
                     "operacion": operacion,
+                    "usuario": "<%=Request.Cookies["usuario"].Value.ToString()%>",
                     "id_producto": id_producto,
                     "nombre_producto": nombre_producto,
                     "costo_producto": costo_producto,

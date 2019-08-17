@@ -21,6 +21,7 @@
     <div class="loader">
         <img class="imageLoad" src="img/load.gif" />
     </div>
+
     <nav class="nav">
         <div class="burger">
             <div class="burger__patty"></div>
@@ -28,20 +29,57 @@
 
         <ul class="nav__list">
             <li class="nav__item">
-                <a href="#1" class="nav__link c-blue">
-                    <img src="img/home-icon.png" alt=""></a>
+                <a href="Default.aspx" class="nav__link c-blue">
+                    <img class="menu-icon" src="img/menu/home.png" alt=""></a>
             </li>
             <li class="nav__item">
-                <a href="#2" class="nav__link c-yellow scrolly">
-                    <img src="img/about-icon.png" alt=""></a>
+                <a href="ClientesListado.aspx" class="nav__link c-yellow scrolly">
+                    <img class="menu-icon" src="img/menu/contact.png" alt=""></a>
             </li>
             <li class="nav__item">
-                <a href="#3" class="nav__link c-red">
-                    <img src="img/projects-icon.png" alt=""></a>
+                <a href="CategoriaProductoListado.aspx" class="nav__link c-red">
+                    <img class="menu-icon" src="img/menu/category.jpg" alt=""></a>
             </li>
             <li class="nav__item">
-                <a href="#4" class="nav__link c-green">
-                    <img src="img/contact-icon.png" alt=""></a>
+                <a href="ProductoListado.aspx" class="nav__link c-green">
+                    <img class="menu-icon" src="img/menu/product.jpg" alt=""></a>
+            </li>
+            <li class="nav__item">
+                <a href="VentaListado.aspx" class="nav__link c-green">
+                    <img class="menu-icon" src="img/menu/venta.jpg" alt=""></a>
+            </li>
+        </ul>
+    </nav>
+    <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: #455871">
+        <ul class="navbar-nav ml-auto ul-nav">
+            <div class="topbar-divider d-none d-sm-block"></div>
+
+            <!-- Nav Item - User Information -->
+            <li class="nav-item dropdown no-arrow" style="padding-top: 10px;">
+                <%if (_NombreUsuario == "")
+                    {
+                %>
+                <a class="nav-link dropdown-toggle noShowLoader" style="color: white" href="Login.aspx" id="userDropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    <span class="mr-2 d-none d-lg-inline text-gray-600 small" style="font-size: 20px;">Conectarse</span>
+                </a>
+                <%
+                    }
+                    else
+                    {
+                %>
+                <a class="nav-link dropdown-toggle noShowLoader" style="color: white" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="mr-2 d-none d-lg-inline text-gray-600" style="font-size: 20px;"><i class="glyphicon glyphicon-user"></i>&nbsp;<%=_NombreUsuario %></span>
+                    <%--<img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">--%>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" style="color: white; font-size: 18px;" href="Login.aspx">&nbsp;<i class="glyphicon glyphicon-share"></i>
+                        Salir
+                    </a>
+                </div>
+                <%
+                    }
+                %>               
             </li>
         </ul>
     </nav>
@@ -52,8 +90,8 @@
                 <div class="panel__content">
                     <div class="container">
                         <div class="row">
-                            <div class="col-md-8 col-md-offset-2">
-                                <div class="contact-content">
+                            <div class="col-md-12">
+                                <div class="contact-content">                                   
                                     <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
                                     </asp:ContentPlaceHolder>
                                 </div>
@@ -63,10 +101,35 @@
                 </div>
             </article>
         </section>
+        <%-- <div class="footer" style="background: #3e4e62;">
+            <%if (_NombreUsuario != "")
+                {
+            %>
+            <small style="color: white;">Usuario en sesión:
+                <bold><%=_NombreUsuario %></bold>
+            </small>
+            <%
+                }%>
+        </div>--%>
     </form>
     <script src="js/vendor/bootstrap.min.js"></script>
     <script src="js/plugins.js"></script>
     <script src="js/main.js"></script>
     <script src="js/funciones.js"></script>
+    <style>
+        .dropdown-menu {
+            background-color: steelblue;
+        }
+
+        .ul-nav {
+            margin-left: 80%;
+        }
+
+        @media (max-width: 420px) {
+            .ul-nav {
+                margin-left: 60%;
+            }
+        }
+    </style>
 </body>
 </html>

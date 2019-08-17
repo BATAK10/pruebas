@@ -55,7 +55,7 @@ namespace prjHeladeria.BLL
             {
                 _NombreCategoriaProducto = value;
             }
-        }        
+        }
         private string _EstadoCategoriaProducto;
         public string EstadoCategoriaProducto
         {
@@ -66,6 +66,18 @@ namespace prjHeladeria.BLL
             set
             {
                 _EstadoCategoriaProducto = value;
+            }
+        }
+        private string _Usuario;
+        public string Usuario
+        {
+            get
+            {
+                return _Usuario;
+            }
+            set
+            {
+                _Usuario = value;
             }
         }
         #endregion
@@ -95,6 +107,10 @@ namespace prjHeladeria.BLL
             {
                 _Mensaje += "Ingrese el estado de categoría producto. "; _Resultado = false;
             }
+            if (_Usuario == "")
+            {
+                _Mensaje += "Ingrese el usuario. "; _Resultado = false;
+            }
             return _Resultado;
         }
 
@@ -114,17 +130,18 @@ namespace prjHeladeria.BLL
                     {
                         // Obtener código de categoria_producto siguiente
                         Funciones _f = new Funciones();
-                        int codigoCategoriaProducto= (int)_f.Consultar(int.Parse(_CodigoCategoriaProducto), "IFNULL(max(id_categoria_producto),0) + 1", "categoria_producto", "", "", "");
+                        int codigoCategoriaProducto = (int)_f.Consultar(int.Parse(_CodigoCategoriaProducto), "IFNULL(max(id_categoria_producto),0) + 1", "categoria_producto", "", "", "");
                         resultadoQuery = _Conectar.ejecutarComando("insert into categoria_producto values ("
                             + codigoCategoriaProducto + ","
-                            + "'"+_NombreCategoriaProducto + "',"                            
-                            + _EstadoCategoriaProducto
-                            +")");
+                            + "'" + _NombreCategoriaProducto + "',"
+                            + _EstadoCategoriaProducto + ",'"
+                            + _Usuario
+                            + "')");
                     }
                     if (_TipoDeOperacion == 2)
                     {
                         resultadoQuery = _Conectar.ejecutarComando("update categoria_producto set nombre_categoria_producto = '" +
-                            _NombreCategoriaProducto + "', estado_categoria_producto='"                                                        
+                            _NombreCategoriaProducto + "', estado_categoria_producto='"
                             + _EstadoCategoriaProducto + "' where id_categoria_producto = "
                             + _CodigoCategoriaProducto);
                     }
