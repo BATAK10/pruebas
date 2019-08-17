@@ -9,7 +9,7 @@
         <h4>Heladería</h4>
     </div>
     <div class="row">
-        <div class="col-md-1">
+        <div class="col-md-12">
             <div class="contat-form">
                 <div class="row text-center">
                     <span style="color: white;">Gestión de contactos, productos y ventas.</span>
@@ -31,7 +31,7 @@
         <h4>Ventas</h4>
     </div>
     <div class="row">
-        <div class="col-md-1">
+        <div class="col-md-12">
             <div class="contat-form">
                 <div class="row text-center">
                     <span style="color: white;">Gestión de contactos, productos y ventas.</span>
@@ -52,7 +52,7 @@
         <h4>Bienvenido</h4>
     </div>
     <div class="row">
-        <div class="col-md-1">
+        <div class="col-md-12">
             <div class="contat-form">
                 <div class="row text-center">
                     <span style="color: white;">Gestión de contactos, productos y ventas.</span>

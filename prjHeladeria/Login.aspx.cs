@@ -13,11 +13,14 @@ namespace prjHeladeria
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            Request.Cookies["usuario"].Expires = DateTime.Now.AddDays(-1);
+            if (Request.Cookies["usuario"] != null)
+            {
+                Request.Cookies["usuario"].Expires = DateTime.Now.AddDays(-1);
+            }
             HttpCookie Usuario = new HttpCookie("usuario");
             Usuario.Value = txtUsuario.Value;
             Usuario.Expires = DateTime.Now.AddDays(365);
-            Response.Cookies.Add(Usuario);            
+            Response.Cookies.Add(Usuario);
         }
         [WebMethod]
         public static string Ingresar(string usuario, string contraseña)
@@ -35,7 +38,7 @@ namespace prjHeladeria
             }
             catch (Exception ex)
             {
-                _Mensaje = "Error: "+ex.Message;
+                _Mensaje = "Error: " + ex.Message;
             }
             return _Mensaje;
         }
