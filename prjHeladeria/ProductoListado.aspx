@@ -36,10 +36,6 @@
                             <HeaderStyle CssClass="warning" />
                             <ItemStyle CssClass="info" />
                         </asp:BoundField>
-                        <asp:BoundField DataField="COSTO_PRODUCTO" HeaderText="Costo">
-                            <HeaderStyle CssClass="warning" />
-                            <ItemStyle CssClass="info" />
-                        </asp:BoundField>
                         <asp:BoundField DataField="NOMBRE_CATEGORIA_PRODUCTO" HeaderText="Categoría">
                             <HeaderStyle CssClass="warning" />
                             <ItemStyle CssClass="info" />

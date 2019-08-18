@@ -321,10 +321,33 @@ namespace prjHeladeria.BLL
                 catch (Exception ex)
                 {
                     Mensaje = ex.Message;
+                    _Resultado = false;
                 }
             }
             else
                 _Resultado = false;
+            return _Resultado;
+        }
+        public bool CambiarEstadoVenta()
+        {
+            bool _Resultado = true;
+            try
+            {
+                DAL.DAL _Conectar = new DAL.DAL();
+                int resultadoQuery = 0;
+                resultadoQuery = _Conectar.ejecutarComando("update venta set estado_venta = "
+                           + _EstadoVenta + " where id_venta = "
+                           + _CodigoVenta);
+                if (resultadoQuery == 0)
+                {
+                    _Resultado = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                Mensaje = ex.Message;
+                _Resultado = false;
+            }
             return _Resultado;
         }
         #endregion

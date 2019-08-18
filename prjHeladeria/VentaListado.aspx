@@ -3,6 +3,16 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div id="mensajes">
+        <%if (_MensajeSatisfactorio != "")
+            { %>
+        <div class="alert alert-success"><%=_MensajeSatisfactorio %></div>
+        <%} %>
+        <%if (_MensajeDeError != "")
+            { %>
+        <div class="alert alert-danger"><%=_MensajeDeError%></div>
+        <%} %>
+    </div>
     <div class="heading">
         <h4>Listado de ventas</h4>
         <button type="button" onclick="window.open('Venta.aspx?o=1','_self')" class="btn">Agregar</button>
@@ -18,7 +28,7 @@
                 }
             %>
             <div class="table-responsive">
-                <asp:GridView ID="dgvListadoVenta" AutoGenerateColumns="false" runat="server" CssClass="table table-hover">
+                <asp:GridView ID="dgvListadoVenta" AutoGenerateColumns="false" runat="server" CssClass="table table-hover" OnRowEditing="dgvListadoVenta_RowEditing" OnRowDeleting="dgvListadoVenta_RowDeleting">
                     <Columns>
                         <asp:BoundField DataField="ID_VENTA" HeaderText="Código">
                             <HeaderStyle CssClass="warning" />
@@ -47,14 +57,22 @@
                             <HeaderStyle CssClass="warning" />
                             <ItemStyle CssClass="estado info" />
                         </asp:BoundField>
-                       <%-- <asp:HyperLinkField ControlStyle-CssClass="glyphicon glyphicon-edit btn btn-info btn-sm" DataNavigateUrlFields="ID_VENTA" HeaderText="Editar" DataNavigateUrlFormatString="Venta.aspx?idv={0}&o=2">
-                            <ItemStyle CssClass="info" HorizontalAlign="Center"></ItemStyle>
+                        <asp:TemplateField HeaderText="Entregado">
+                            <ItemTemplate>
+                                <asp:LinkButton ID="btnEntregado" CommandName="Edit" ControlStyle-CssClass="glyphicon glyphicon-ok btn btn-success btn-sm" runat="server" OnClick="btnEntregado_Click">                                                        
+                                </asp:LinkButton>
+                            </ItemTemplate>
                             <HeaderStyle CssClass="warning" />
-                        </asp:HyperLinkField>
-                        <asp:HyperLinkField ControlStyle-CssClass="glyphicon glyphicon-trash btn btn-danger btn-sm" DataNavigateUrlFields="ID_VENTA" HeaderText="Eliminar" DataNavigateUrlFormatString="Venta.aspx?idv={0}&o=3">
-                            <ItemStyle CssClass="info" HorizontalAlign="Center"></ItemStyle>
+                            <ItemStyle CssClass="estado info" />
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Pendiente">
+                            <ItemTemplate>
+                                <asp:LinkButton ID="btnPendiente" CommandName="Delete" ControlStyle-CssClass="glyphicon glyphicon-time btn btn-warning btn-sm" runat="server" OnClick="btnPendiente_Click">                                    
+                                </asp:LinkButton>
+                            </ItemTemplate>
                             <HeaderStyle CssClass="warning" />
-                        </asp:HyperLinkField>--%>
+                            <ItemStyle CssClass="estado info" />
+                        </asp:TemplateField>
                     </Columns>
                 </asp:GridView>
             </div>

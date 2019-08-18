@@ -10,10 +10,12 @@ namespace prjHeladeria
 {
     public partial class VentaListado : System.Web.UI.Page
     {
-        public string _Mensaje = "";
+        public string _MensajeDeError = "";
+        public string _MensajeSatisfactorio = "";
         public DataTable dtDatos = new DataTable();
         public string _usuario = "";
         Funciones CargarDatos = new Funciones();
+        BLL.Ventas _Venta = new BLL.Ventas();
         protected void Page_Load(object sender, EventArgs e)
         {
             try
@@ -36,7 +38,72 @@ namespace prjHeladeria
             }
             catch (Exception ex)
             {
-                _Mensaje = "Error: " + ex.Message;
+                _MensajeDeError = "Error: " + ex.Message;
+            }
+        }
+
+        protected void btnEntregado_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btnPendiente_Click(object sender, EventArgs e)
+        {
+        }
+
+        protected void dgvListadoVenta_RowEditing(object sender, GridViewEditEventArgs e)
+        {
+            try
+            {
+                try
+                {
+                    string id_venta = dgvListadoVenta.Rows[e.NewEditIndex].Cells[0].Text;
+                    _Venta.CodigoVenta = id_venta;
+                    _Venta.EstadoVenta = "2";
+                    if (_Venta.CambiarEstadoVenta())
+                    {
+                        _MensajeSatisfactorio = "Estado modificado con éxito";
+                        Response.Redirect("VentaListado.aspx");
+                    }
+                    else
+                        _MensajeDeError = "Error al modificar el estado.";
+                }
+                catch (Exception ex)
+                {
+                    _MensajeDeError = "Error: " + ex.Message;
+                }
+            }
+            catch (Exception ex)
+            {
+                _MensajeDeError = "Error: " + ex.Message;
+            }
+        }
+
+        protected void dgvListadoVenta_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            try
+            {
+                try
+                {
+                    string id_venta = dgvListadoVenta.Rows[e.RowIndex].Cells[0].Text;
+                    _Venta.CodigoVenta = id_venta;
+                    _Venta.EstadoVenta = "1";
+                    if (_Venta.CambiarEstadoVenta())
+                    {
+                        _MensajeSatisfactorio = "Estado modificado con éxito";
+                        Response.Redirect("VentaListado.aspx");
+                    }
+                    else
+                        _MensajeDeError = "Error al modificar el estado.";
+                }
+                catch (Exception ex)
+                {
+                    _MensajeDeError = "Error: " + ex.Message;
+                }
+            }
+            catch (Exception ex)
+            {
+                _MensajeDeError = "Error: " + ex.Message;
             }
         }
     }
