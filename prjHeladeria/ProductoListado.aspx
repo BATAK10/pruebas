@@ -21,28 +21,28 @@
                 <asp:GridView ID="dgvListadoProducto" AutoGenerateColumns="false" runat="server" CssClass="table table-hover">
                     <Columns>
                         <asp:BoundField DataField="ID_PRODUCTO" HeaderText="Código">
-                            <HeaderStyle CssClass="warning" />
-                            <ItemStyle CssClass="info" />
+                            <HeaderStyle CssClass="warning text-center" />
+                            <ItemStyle CssClass="info text-center" />
                         </asp:BoundField>
                         <asp:HyperLinkField DataTextField="NOMBRE_PRODUCTO" HeaderText="Nombre" DataNavigateUrlFormatString="~/Producto.aspx?idp={0}&o=4" DataNavigateUrlFields="ID_PRODUCTO">
                             <HeaderStyle CssClass="warning" />
                             <ItemStyle CssClass="info" />
                         </asp:HyperLinkField>
                         <asp:BoundField DataField="COSTO_PRODUCTO" HeaderText="Costo">
-                            <HeaderStyle CssClass="warning" />
-                            <ItemStyle CssClass="info" />
+                            <HeaderStyle CssClass="warning text-center" />
+                            <ItemStyle CssClass="info text-right" />
                         </asp:BoundField>
                         <asp:BoundField DataField="CANTIDAD_PRODUCTO" HeaderText="Cantidad en stock">
-                            <HeaderStyle CssClass="warning" />
-                            <ItemStyle CssClass="info" />
+                            <HeaderStyle CssClass="warning text-center" />
+                            <ItemStyle CssClass="info text-center" />
                         </asp:BoundField>
                         <asp:BoundField DataField="NOMBRE_CATEGORIA_PRODUCTO" HeaderText="Categoría">
                             <HeaderStyle CssClass="warning" />
                             <ItemStyle CssClass="info" />
                         </asp:BoundField>
                         <asp:BoundField DataField="ESTADO_PRODUCTO" HeaderText="Estado">
-                            <HeaderStyle CssClass="warning" />
-                            <ItemStyle CssClass="estado info" />
+                            <HeaderStyle CssClass="warning text-center" />
+                            <ItemStyle CssClass="estado info text-center" />
                         </asp:BoundField>
                         <asp:HyperLinkField ControlStyle-CssClass="glyphicon glyphicon-edit btn btn-info btn-sm" DataNavigateUrlFields="ID_PRODUCTO" HeaderText="Editar" DataNavigateUrlFormatString="Producto.aspx?idp={0}&o=2">
                             <ItemStyle CssClass="info" HorizontalAlign="Center"></ItemStyle>

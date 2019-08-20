@@ -5,9 +5,27 @@ Stacked Template
 http://www.templatemo.com/tm-505-stacked
 
 */
-.menu-icon{
+.select2-container{
+    padding-bottom: 10px;
+}
+.dropdown-menu {
+    background-color: steelblue;
+}
+
+.ul-nav {
+    margin-left: 80%;
+}
+
+@media (max-width: 420px) {
+    .ul-nav {
+        margin-left: 60%;
+    }
+}
+
+.menu-icon {
     width: 28%;
 }
+
 .loader {
     position: fixed;
     left: 0px;
@@ -348,7 +366,7 @@ ul {
 .home-content {
     /*height: 90vh;*/
     background-color: rgba(45, 58, 75, 0.5);
-    padding: 0px 60px;
+    padding: 0px 10px;
     position: relative;
     /*margin: 10vh auto 0 auto;*/
 }
@@ -371,8 +389,7 @@ ul {
     .home-content .home-box-content {
         /*margin-top: 45px;*/
         background-color: #455871;
-        position: relative;
-        right: -100px;
+        position: relative;        
         padding: 30px;
         display: block;
     }

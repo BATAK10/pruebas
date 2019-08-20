@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="css/templatemo-style.css">
+    <link href="css/jquery-ui.css" rel="stylesheet" />
+    <link href="css/select2.css" rel="stylesheet" />
     <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
     <title>Heladería</title>
     <asp:ContentPlaceHolder ID="head" runat="server">
@@ -91,7 +93,7 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="contact-content">                                   
+                                <div class="contact-content">
                                     <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
                                     </asp:ContentPlaceHolder>
                                 </div>
@@ -101,35 +103,12 @@
                 </div>
             </article>
         </section>
-        <%-- <div class="footer" style="background: #3e4e62;">
-            <%if (_NombreUsuario != "")
-                {
-            %>
-            <small style="color: white;">Usuario en sesión:
-                <bold><%=_NombreUsuario %></bold>
-            </small>
-            <%
-                }%>
-        </div>--%>
     </form>
     <script src="js/vendor/bootstrap.min.js"></script>
     <script src="js/plugins.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/select2.full.js"></script>
+    <script src="js/jquery-ui.js"></script>
     <script src="js/funciones.js"></script>
-    <style>
-        .dropdown-menu {
-            background-color: steelblue;
-        }
-
-        .ul-nav {
-            margin-left: 80%;
-        }
-
-        @media (max-width: 420px) {
-            .ul-nav {
-                margin-left: 60%;
-            }
-        }
-    </style>
 </body>
 </html>

@@ -14,7 +14,7 @@
                         <input runat="server" name="usuario" type="text" class="form-control" id="txtUsuario" placeholder="Usuario" required>
                     </fieldset>
                     <fieldset>
-                        <input runat="server" name="contraseña" type="password" class="form-control" id="txtContraseña" placeholder="Constraseña" required="">
+                        <input runat="server" name="contraseña" type="password" class="form-control" id="txtContraseña" placeholder="Contraseña" required="">
                     </fieldset>
                     <fieldset>
                         <button type="button" id="form-submit" onclick="Ingresar()" class="btn">Ingresar</button>

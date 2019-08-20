@@ -31,8 +31,8 @@
                 <asp:GridView ID="dgvListadoVenta" AutoGenerateColumns="false" runat="server" CssClass="table table-hover" OnRowEditing="dgvListadoVenta_RowEditing" OnRowDeleting="dgvListadoVenta_RowDeleting">
                     <Columns>
                         <asp:BoundField DataField="ID_VENTA" HeaderText="Código">
-                            <HeaderStyle CssClass="warning" />
-                            <ItemStyle CssClass="info" />
+                            <HeaderStyle CssClass="warning text-center" />
+                            <ItemStyle CssClass="info text-center" />
                         </asp:BoundField>
 
                         <asp:HyperLinkField DataTextField="NOMBRE_CLIENTE" HeaderText="Cliente" DataNavigateUrlFormatString="~/Venta.aspx?idv={0}&o=4" DataNavigateUrlFields="ID_VENTA">
@@ -50,28 +50,28 @@
                         </asp:BoundField>
 
                         <asp:BoundField DataField="COSTO_TOTAL_VENTA" HeaderText="Costo total">
-                            <HeaderStyle CssClass="warning" />
-                            <ItemStyle CssClass="info" />
+                            <HeaderStyle CssClass="warning text-center" />
+                            <ItemStyle CssClass="info text-right" />
                         </asp:BoundField>
                         <asp:BoundField DataField="ESTADO_VENTA" HeaderText="Estado">
-                            <HeaderStyle CssClass="warning" />
-                            <ItemStyle CssClass="estado info" />
+                            <HeaderStyle CssClass="warning text-center" />
+                            <ItemStyle CssClass="estado info text-center" />
                         </asp:BoundField>
                         <asp:TemplateField HeaderText="Entregado">
                             <ItemTemplate>
                                 <asp:LinkButton ID="btnEntregado" CommandName="Edit" ControlStyle-CssClass="glyphicon glyphicon-ok btn btn-success btn-sm" runat="server" OnClick="btnEntregado_Click">                                                        
                                 </asp:LinkButton>
                             </ItemTemplate>
-                            <HeaderStyle CssClass="warning" />
-                            <ItemStyle CssClass="estado info" />
+                            <HeaderStyle CssClass="warning text-center" />
+                            <ItemStyle CssClass="estado info text-center" />
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="Pendiente">
                             <ItemTemplate>
                                 <asp:LinkButton ID="btnPendiente" CommandName="Delete" ControlStyle-CssClass="glyphicon glyphicon-time btn btn-warning btn-sm" runat="server" OnClick="btnPendiente_Click">                                    
                                 </asp:LinkButton>
                             </ItemTemplate>
-                            <HeaderStyle CssClass="warning" />
-                            <ItemStyle CssClass="estado info" />
+                            <HeaderStyle CssClass="warning text-center" />
+                            <ItemStyle CssClass="estado info text-center" />
                         </asp:TemplateField>
                     </Columns>
                 </asp:GridView>

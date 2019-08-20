@@ -21,16 +21,16 @@
                 <asp:GridView ID="dgvListadoCategoriaProducto" AutoGenerateColumns="false" runat="server" CssClass="table table-hover">
                     <Columns>
                         <asp:BoundField DataField="ID_CATEGORIA_PRODUCTO" HeaderText="Código">
-                            <HeaderStyle CssClass="warning" />
-                            <ItemStyle CssClass="info" />
+                            <HeaderStyle CssClass="warning text-center" />
+                            <ItemStyle CssClass="info text-center" />
                         </asp:BoundField>
                         <asp:HyperLinkField DataTextField="NOMBRE_CATEGORIA_PRODUCTO" HeaderText="Nombre" DataNavigateUrlFormatString="~/CategoriaProducto.aspx?icp={0}&o=4" DataNavigateUrlFields="ID_CATEGORIA_PRODUCTO">
                             <HeaderStyle CssClass="warning" />
                             <ItemStyle CssClass="info" />
                         </asp:HyperLinkField>
                         <asp:BoundField DataField="ESTADO_CATEGORIA_PRODUCTO" HeaderText="Estado">
-                            <HeaderStyle CssClass="warning" />
-                            <ItemStyle CssClass="estado info" />
+                            <HeaderStyle CssClass="warning text-center" />
+                            <ItemStyle CssClass="estado info text-center" />
                         </asp:BoundField>
                         <asp:HyperLinkField ControlStyle-CssClass="glyphicon glyphicon-edit btn btn-info btn-sm" DataNavigateUrlFields="ID_CATEGORIA_PRODUCTO" HeaderText="Editar" DataNavigateUrlFormatString="CategoriaProducto.aspx?icp={0}&o=2">
                             <ItemStyle CssClass="info" HorizontalAlign="Center"></ItemStyle>

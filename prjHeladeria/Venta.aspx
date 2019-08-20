@@ -29,7 +29,7 @@
                         <input runat="server" name="fecha_venta" type="text" class="form-control datepicker" id="txtFechaVenta2" placeholder="Fecha de venta" required="" disabled>
                     </fieldset>
                     <fieldset>
-                        <input runat="server" name="fecha_entrega_venta" type="date" class="form-control" id="txtFechaEntregaVenta" placeholder="Fecha de entrega" required="">
+                        <input runat="server" name="fecha_entrega_venta" class="form-control datepicker" id="txtFechaEntregaVenta" placeholder="Fecha de entrega" required="">
                     </fieldset>
                     <div class="home-content">
                         <h5 style="color: white">Detalle de venta</h5>
@@ -38,8 +38,8 @@
                                 <div class="home-box-content">
                                     <fieldset>
                                         <input runat="server" name="cantidad_venta" type="number" class="form-control" id="txtCantidadVenta" placeholder="Cantidad" required="">
-                                        <input runat="server" name="costo_unidad" type="number" class="form-control" id="txtCostoUnidad" placeholder="Costo unidad" required="">
-                                        <input runat="server" name="cantidad_stock_producto" type="number" class="form-control" id="txtCantidadStockProducto" placeholder="Cantidad en stock" required="">
+                                        <input runat="server" name="costo_unidad" type="number" class="form-control" id="txtCostoUnidad" placeholder="Costo unidad" required="" disabled>
+                                        <input runat="server" name="cantidad_stock_producto" type="number" class="form-control" id="txtCantidadStockProducto" placeholder="Cantidad en stock" required="" disabled>
                                     </fieldset>
                                     <fieldset>
                                         <input runat="server" name="costo_total_producto" type="number" class="form-control" id="txtCostoTotal" placeholder="Costo total" disabled required="">
@@ -147,7 +147,7 @@
         function OperarVentaDetalle() {
             var operacion = 1;
             var mensaje = "";
-            
+
             var id_categoria_producto = $("#ContentPlaceHolder1_cmbIdCategoriaProductoVenta option:selected");
             var id_producto = $("#ContentPlaceHolder1_cmbIdProductoVenta option:selected");
             var cantidad_producto = $("#ContentPlaceHolder1_txtCantidadVenta");
@@ -209,7 +209,7 @@
             }
         }
         function EliminarFila(botonEliminar) {
-            
+
             var idFila = $(botonEliminar).attr("id");
             var table = document.getElementById("tblVentaDetalle");
             var costo_total_fila = table.rows.item(idFila).cells[7].innerHTML;
@@ -251,7 +251,7 @@
             } else {
                 // 1. Obtener detalle de venta
                 var ventaDetalle = [];
-                
+
                 var tablaDatos = document.getElementById("tblVentaDetalle");
                 var data;
                 for (var i = 1; i < tablaDatos.rows.length; i++) {

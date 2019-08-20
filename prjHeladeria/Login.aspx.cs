@@ -35,6 +35,10 @@ namespace prjHeladeria
                 {
                     _Mensaje = "Error: usuario o contraseña inválido";
                 }
+                else
+                {
+                    _Mensaje = "Acceso correcto";
+                }
             }
             catch (Exception ex)
             {

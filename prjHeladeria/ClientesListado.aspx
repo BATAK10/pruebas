@@ -21,8 +21,8 @@
                 <asp:GridView ID="dgvListadoClientes" AutoGenerateColumns="false" runat="server" CssClass="table table-hover">
                     <Columns>
                         <asp:BoundField DataField="ID_CLIENTE" HeaderText="Código">
-                            <HeaderStyle CssClass="warning" />
-                            <ItemStyle CssClass="info" />
+                            <HeaderStyle CssClass="warning text-center" />
+                            <ItemStyle CssClass="info text-center" />
                         </asp:BoundField>
                         <asp:HyperLinkField DataTextField="NOMBRE_CLIENTE" HeaderText="Nombre" DataNavigateUrlFormatString="~/Clientes.aspx?idc={0}&o=4" DataNavigateUrlFields="ID_CLIENTE">
                             <HeaderStyle CssClass="warning" />
@@ -33,16 +33,16 @@
                             <ItemStyle CssClass="info" />
                         </asp:BoundField>
                         <asp:BoundField DataField="TELEFONO_CLIENTE" HeaderText="Teléfono">
-                            <HeaderStyle CssClass="warning" />
-                            <ItemStyle CssClass="info" />
+                            <HeaderStyle CssClass="warning text-center" />
+                            <ItemStyle CssClass="info text-center" />
                         </asp:BoundField>
                         <asp:BoundField DataField="DIRECCION_CLIENTE" HeaderText="Dirección">
                             <HeaderStyle CssClass="warning" />
                             <ItemStyle CssClass="info" />
                         </asp:BoundField>
                         <asp:BoundField DataField="ESTADO_CLIENTE" HeaderText="Estado">
-                            <HeaderStyle CssClass="warning" />
-                            <ItemStyle CssClass="estado info" />
+                            <HeaderStyle CssClass="warning text-center" />
+                            <ItemStyle CssClass="estado info text-center" />
                         </asp:BoundField>
                         <asp:HyperLinkField ControlStyle-CssClass="glyphicon glyphicon-edit btn btn-info btn-sm" DataNavigateUrlFields="ID_CLIENTE" HeaderText="Editar" DataNavigateUrlFormatString="Clientes.aspx?idc={0}&o=2">
                             <ItemStyle CssClass="info" HorizontalAlign="Center"></ItemStyle>
