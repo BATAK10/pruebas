@@ -5,9 +5,26 @@ Stacked Template
 http://www.templatemo.com/tm-505-stacked
 
 */
-.select2-container{
+input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    color: white !important;
+}
+
+input::-moz-placeholder { /* Firefox 19+ */
+    color: white !important;
+}
+
+input:-ms-input-placeholder { /* IE 10+ */
+    color: white !important;
+}
+
+input:-moz-placeholder { /* Firefox 18- */
+    color: white !important;
+}
+
+.select2-container {
     padding-bottom: 10px;
 }
+
 .dropdown-menu {
     background-color: steelblue;
 }
@@ -389,7 +406,7 @@ ul {
     .home-content .home-box-content {
         /*margin-top: 45px;*/
         background-color: #455871;
-        position: relative;        
+        position: relative;
         padding: 30px;
         display: block;
     }

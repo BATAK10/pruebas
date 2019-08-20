@@ -61,7 +61,7 @@
     };
     $.datepicker.setDefaults($.datepicker.regional['es']);
 });
-function CallAjax(url, dataValue, callOk) {
+function CallAjax(url, dataValue, callOk) {    
     $.ajax({
         type: "POST",
         url: url,

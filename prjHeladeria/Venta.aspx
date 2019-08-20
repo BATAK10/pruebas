@@ -289,7 +289,7 @@
                 document.getElementById('ContentPlaceHolder1_cmbEstadoVenta').getElementsByTagName('option')[0].selected = 'selected';
             }
         }
-        $("#ContentPlaceHolder1_txtCantidadVenta").on("change", function () {
+        $("#ContentPlaceHolder1_txtCantidadVenta").on("keyup", function () {
             var cantidad = parseInt($(this).val());
             var cantidad_stock = parseInt($("#ContentPlaceHolder1_txtCantidadStockProducto").val());
             if (cantidad > cantidad_stock) {
@@ -322,7 +322,7 @@
             }
         }
         function LlenarCombo(url, dataValue, idcombo) {
-
+            $(".loader").show();
             CallAjaxValor(url, dataValue, callOkProducto)
 
             function callOkProducto(listaProductos) {
@@ -333,6 +333,7 @@
                     if (listaProductos.dato[i] != null)
                         select.options[select.options.length] = new Option(listaProductos.dato[i][1], listaProductos.dato[i][0]);
                 }
+                $(".loader").hide();
             }
         }
     </script>
