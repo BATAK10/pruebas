@@ -23,10 +23,18 @@
             $(this).html("<div class='label label-danger'>" + estado.toLowerCase() + "</div>")
         }
     });
-
+    $.each($(".formatoNumerosConComas"), function () {        
+        $(this).text(FormatoNumerosComas($(this).text()));
+    });
+    $.each($(".formatoNumerosEnteros"), function () {
+        $(this).text(FormatoNumerosEnteros($(this).text()));
+    });
+    $.each($(".formatoNumerosEnterosConComas"), function () {
+        $(this).text(FormatoNumerosEnterosConComas($(this).text()));
+    });
     // For select 2
     $("select").select2({ width: '100%' });
-    
+
     $(function () {
         $('.datepicker').datepicker({
             dateFormat: 'dd/mm/yy',
@@ -61,7 +69,16 @@
     };
     $.datepicker.setDefaults($.datepicker.regional['es']);
 });
-function CallAjax(url, dataValue, callOk) {    
+function FormatoNumerosComas(valor) {
+    if ($.trim(valor) == "") {
+        return "0.00";
+    }
+    valor = parseFloat(valor);
+    valor = valor.toFixed(2);
+    return valor.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+function CallAjax(url, dataValue, callOk) {
     $.ajax({
         type: "POST",
         url: url,

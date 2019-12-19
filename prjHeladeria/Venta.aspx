@@ -72,7 +72,7 @@
                     <fieldset>
                         <select runat="server" name="estado_venta" class="form-control" id="cmbEstadoVenta">
                             <option value="0">Seleccione estado</option>
-                            <option value="1">Pendiente</option>
+                            <option value="1" selected="selected">Pendiente</option>
                             <option value="2">Entregado</option>
                         </select>
                     </fieldset>

@@ -256,7 +256,7 @@ namespace prjHeladeria.BLL
                     {
                         // Obtener código de categoria_producto siguiente
                         Funciones _f = new Funciones();
-                        int codigoVenta = (int)_f.Consultar(int.Parse(_CodigoVenta), "IFNULL(max(id_venta),0) + 1", "venta", "", "", "");
+                        int codigoVenta = (int)_f.Consultar(int.Parse(_CodigoVenta), "ISNULL(max(id_venta),0) + 1", "venta", "", "", "");
                         resultadoQuery = _Conectar.ejecutarComando("insert into venta (id_venta,id_cliente_venta, fecha_venta, fecha_entrega_venta, estado_venta, costo_total_venta, usuario) values ("
                             + codigoVenta + ","
                             + _CodigoClienteVenta + ",'"

@@ -30,7 +30,7 @@ namespace prjHeladeria
                         _usuario = Request.Cookies["usuario"].Value;
                 }
 
-                dtDatos = (DataTable)CargarDatos.Consultar(dtDatos, "id_producto,nombre_producto, costo_producto, cantidad_producto, nombre_categoria_producto,CASE WHEN estado_producto= 1 THEN 'ACTIVO' WHEN estado_producto= 2 THEN 'INACTIVO' END AS estado_producto", "producto pro inner join categoria_producto cap on pro.id_categoria_producto = cap.id_categoria_producto and cap.usuario = pro.usuario", "pro.usuario,=," + _usuario, "", "");
+                dtDatos = (DataTable)CargarDatos.Consultar(dtDatos, "id_producto,nombre_producto, costo_producto, cantidad_producto, nombre_categoria_producto,CASE WHEN estado_producto= 1 THEN 'ACTIVO' WHEN estado_producto= 2 THEN 'INACTIVO' END AS estado_producto", "producto pro inner join categoria_producto cap on pro.id_categoria_producto = cap.id_categoria_producto and cap.usuario = pro.usuario", "pro.usuario,=," + _usuario, "", "id_producto");
                 dgvListadoProducto.DataSource = dtDatos;
                 dgvListadoProducto.DataBind();
             }

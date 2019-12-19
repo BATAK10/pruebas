@@ -190,7 +190,7 @@ namespace prjHeladeria.BLL
                     {
                         // Obtener código de cliente siguiente
                         Funciones _f = new Funciones();
-                        int codigoCliente = (int)_f.Consultar(int.Parse(_CodigoCliente), "IFNULL(max(id_cliente),0) + 1", "cliente", "", "", "");
+                        int codigoCliente = (int)_f.Consultar(int.Parse(_CodigoCliente), "ISNULL(max(id_cliente),0) + 1", "cliente", "", "", "");
                         resultadoQuery = _Conectar.ejecutarComando("insert into cliente (id_cliente, nombre_cliente, apellido_cliente, telefono_cliente, direccion_cliente, estado_cliente, usuario) values ("
                             + codigoCliente + ","
                             + "'" + _NombreCliente + "' ,"

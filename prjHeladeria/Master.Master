@@ -15,7 +15,7 @@
     <link href="css/jquery-ui.css" rel="stylesheet" />
     <link href="css/select2.css" rel="stylesheet" />
     <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
-    <title>Heladería</title>
+    <title><%=_Titulo %></title>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
@@ -24,7 +24,7 @@
         <img class="imageLoad" src="img/load.gif" />
     </div>
 
-    <nav class="nav">
+    <nav class="nav" id="menu-principal">
         <div class="burger">
             <div class="burger__patty"></div>
         </div>
@@ -57,7 +57,7 @@
             <div class="topbar-divider d-none d-sm-block"></div>
 
             <!-- Nav Item - User Information -->
-            <li class="nav-item dropdown no-arrow" style="padding-top: 10px;">
+            <li id="usuario-conectarse" class="nav-item dropdown no-arrow" style="padding-top: 10px;">
                 <%if (_NombreUsuario == "")
                     {
                 %>

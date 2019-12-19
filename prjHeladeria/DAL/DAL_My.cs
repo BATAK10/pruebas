@@ -1,21 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using MySql.Data.MySqlClient;
 using System.Linq;
 using System.Web;
-using System.Data.SqlClient;
 
 namespace prjHeladeria.DAL
 {
-    public class DAL
+    public class DAL_My
     {
         private string cadena;
         private DataSet ds;
         private DataTable dt = new DataTable();
-        private SqlDataAdapter da = new SqlDataAdapter();
-        private SqlCommand cm;
-        private SqlConnection cn;
-        private SqlTransaction transaccion;
+        private MySqlDataAdapter da = new MySqlDataAdapter();
+        private MySqlCommand cm;
+        private MySqlConnection cn;
+        private MySqlTransaction transaccion;
         private string _Mensaje;
         public string _consulta = "";
         public string Mensaje
@@ -31,7 +31,7 @@ namespace prjHeladeria.DAL
         }
 
         //declaracion del constructor para una nueva conexion
-        public DAL()
+        public DAL_My()
         {
             establecerConexion();
             Open_Connection();
@@ -48,7 +48,7 @@ namespace prjHeladeria.DAL
                 //Bryan db_a4240c_desarr rena5566
                 //Mario db_a4240c_desa rena4321
                 //Jorge a4240c_doctor  rena1234
-                cn = new SqlConnection(cadena);
+                cn = new MySqlConnection(cadena);
             }
             catch (Exception f)
             {
@@ -60,11 +60,11 @@ namespace prjHeladeria.DAL
         {
             try
             {
-                cm = new SqlCommand(procedimiento, cn);
+                cm = new MySqlCommand(procedimiento, cn);
                 cm.CommandType = CommandType.StoredProcedure;
                 foreach (object parametro in parametros)
                 {
-                    var param = cm.Parameters.Add((SqlParameter)parametro);
+                    var param = cm.Parameters.Add((MySqlParameter)parametro);
                 }
                 string resultado = cm.ExecuteNonQuery().ToString();
 
@@ -82,7 +82,7 @@ namespace prjHeladeria.DAL
         {
             try
             {
-                da = new SqlDataAdapter(consulta, cn);
+                da = new MySqlDataAdapter(consulta, cn);
                 ds = new DataSet();
                 da.Fill(ds);
                 return ds;
@@ -100,12 +100,12 @@ namespace prjHeladeria.DAL
             try
             {
                 dt = new DataTable();
-                da = new SqlDataAdapter(procedimiento, cn);
+                da = new MySqlDataAdapter(procedimiento, cn);
                 ds = new DataSet();
                 da.SelectCommand.CommandType = CommandType.StoredProcedure;
-                foreach (SqlParameter parametro in parametros)
+                foreach (MySqlParameter parametro in parametros)
                 {
-                    da.SelectCommand.Parameters.Add((SqlParameter)parametro);
+                    da.SelectCommand.Parameters.Add((MySqlParameter)parametro);
                 }
                 da.Fill(ds);
                 Close_Connection();
@@ -191,7 +191,7 @@ namespace prjHeladeria.DAL
                         _consulta += " ORDER BY " + orderby;
                     }
 
-                    SqlCommand comandos = new SqlCommand(_consulta, cn);
+                    MySqlCommand comandos = new MySqlCommand(_consulta, cn);
                     foreach (string line in SepararSentencias)
                     {
                         string[] Datos = line.Split(',');
@@ -199,13 +199,13 @@ namespace prjHeladeria.DAL
                         {
                             if (Datos[1].ToString().ToUpper() != "LIKE")
                             {
-                                comandos.Parameters.AddWithValue("@" + Datos[0].TrimStart().Replace(".", ""), Datos[2]);
+                                comandos.Parameters.AddWithValue("@" + Datos[0].TrimStart(), Datos[2]);
 
 
                             }
                         }
                     }
-                    SqlDataReader rdr = comandos.ExecuteReader();
+                    MySqlDataReader rdr = comandos.ExecuteReader();
 
                     var datos = new DataTable();
                     datos.Load(rdr);
@@ -253,7 +253,7 @@ namespace prjHeladeria.DAL
                             }
                             else
                             {
-                                _WhereAcumular += " AND  " + Datos[0] + Datos[1] + "@" + Datos[0].TrimStart().Replace(".", "");
+                                _WhereAcumular += " AND  " + Datos[0] + Datos[1] + "@" + Datos[0].TrimStart();
                             }
 
                         }
@@ -270,7 +270,7 @@ namespace prjHeladeria.DAL
                         _consulta += " ORDER BY " + orderby;
                     }
 
-                    SqlCommand comandos = new SqlCommand(_consulta, cn);
+                    MySqlCommand comandos = new MySqlCommand(_consulta, cn);
                     foreach (string line in SepararSentencias)
                     {
                         string[] Datos = line.Split(',');
@@ -287,11 +287,11 @@ namespace prjHeladeria.DAL
                                 if (nombreParametro.Length == 2)
                                     comandos.Parameters.AddWithValue("@" + nombreParametro[1].TrimStart(), Datos[2]);
                                 else
-                                    comandos.Parameters.AddWithValue("@" + Datos[0].TrimStart().Replace(".",""), Datos[2]);
+                                    comandos.Parameters.AddWithValue("@" + Datos[0].TrimStart(), Datos[2]);
                             }
                         }
                     }
-                    SqlDataReader rdr = comandos.ExecuteReader();
+                    MySqlDataReader rdr = comandos.ExecuteReader();
 
 
                     var datos = new DataTable();
@@ -325,7 +325,7 @@ namespace prjHeladeria.DAL
         {
             try
             {
-                da = new SqlDataAdapter(sql, cn);
+                da = new MySqlDataAdapter(sql, cn);
                 ds = new DataSet();
                 da.Fill(ds);
                 Close_Connection();
@@ -345,20 +345,20 @@ namespace prjHeladeria.DAL
         //Este es un metodo que ejecuta una consulta, que devuelve un numero entero, como por ejemplo count
         public int ejecutarComando(string sql)
         {
-            cm = new SqlCommand(sql, cn);
+            cm = new MySqlCommand(sql, cn);
             try
             {
                 if (cm.Connection.State != ConnectionState.Open)
                 {
                     cm.Connection.Open();
-                }
+                }                
                 int n = cm.ExecuteNonQuery();
                 cm.Connection.Close();
                 return n;
 
             }
             catch (Exception e)
-            {
+            {                
                 cm.Connection.Close();
                 return -1;
             }
@@ -370,13 +370,13 @@ namespace prjHeladeria.DAL
 
             try
             {
-                cm = new SqlCommand(sql, cn);
+                cm = new MySqlCommand(sql, cn);
                 cm.CommandType = CommandType.Text;
                 cm.Transaction = transaccion;
                 if (cn.State == ConnectionState.Closed)
                 { cn.Open(); }
                 cm.ExecuteNonQuery();
-                da = new SqlDataAdapter(cm);
+                da = new MySqlDataAdapter(cm);
                 ds = new DataSet();
                 da.Fill(ds);
                 return ds;
@@ -393,7 +393,7 @@ namespace prjHeladeria.DAL
 
         public int EjecutarComandoUsingTransaction(string sql)
         {
-            cm = new SqlCommand(sql, cn);
+            cm = new MySqlCommand(sql, cn);
             cm.CommandType = CommandType.Text;
             cm.Transaction = transaccion;
             if (cn.State == ConnectionState.Closed)
@@ -432,7 +432,7 @@ namespace prjHeladeria.DAL
 
         public int GetValueOfQueryUsingTran(string sql)
         {
-            cm = new SqlCommand(sql, cn);
+            cm = new MySqlCommand(sql, cn);
             cm.CommandType = CommandType.Text;
             cm.Transaction = transaccion;
             if (cn.State == ConnectionState.Closed)

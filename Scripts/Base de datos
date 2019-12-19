@@ -1,0 +1,51 @@
+CREATE TABLE usuario (
+usuario VARCHAR(25),
+contraseña VARCHAR(50)
+)
+
+CREATE TABLE venta (
+id_venta int,
+id_cliente_venta int, 
+fecha_venta date,  
+fecha_entrega_venta date,  
+estado_venta int, 
+costo_total_venta float, 
+usuario VARCHAR(25)
+)
+
+CREATE TABLE venta_detalle (
+id_venta int,
+id_venta_detalle int, 
+id_categoria_producto_venta int, 
+id_producto_venta int, 
+cantidad_venta int, 
+costo_total_venta float, 
+usuario VARCHAR(25)
+)
+
+CREATE TABLE producto (
+id_producto int,
+nombre_producto VARCHAR(50),
+costo_producto float,
+cantidad_producto int,
+id_categoria_producto int,
+id_foto VARCHAR(50)
+)
+
+CREATE TABLE cliente (
+id_cliente int, 
+nombre_cliente VARCHAR(50), 
+apellido_cliente VARCHAR(50), 
+telefono_cliente VARCHAR(8), 
+direccion_cliente VARCHAR(75), 
+estado_cliente int, 
+usuario VARCHAR(25)
+)
+
+CREATE TABLE categoria_producto (
+id_categoria_producto int,
+nombre_categoria_producto VARCHAR(50),
+estado_categoria_producto int
+)
+
+alter table producto add id_foto VARCHAR(50)

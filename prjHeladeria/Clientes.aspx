@@ -29,7 +29,7 @@
                     <fieldset>
                         <select runat="server" name="estado_cliente" class="form-control" id="cmbEstadoCliente">
                             <option value="0">Seleccione estado</option>
-                            <option value="1">Activo</option>
+                            <option value="1" selected="selected">Activo</option>
                             <option value="2">Inactivo</option>
                         </select>
                     </fieldset>

@@ -6,6 +6,7 @@
     <div class="heading">
         <h4>Listado de productos</h4>
         <button type="button" onclick="window.open('Producto.aspx?o=1','_self')" class="btn">Agregar</button>
+        <button type="button" onclick="window.open('ProductoCatalogo.aspx','_self')" class="btn">Catálogo <i class="glyphicon glyphicon-shopping-cart"></i></button>
     </div>
     <div class="row">
         <div class="col-md-12">

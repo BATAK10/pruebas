@@ -1,11 +1,13 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master.Master" AutoEventWireup="true" CodeBehind="Producto.aspx.cs" Inherits="prjHeladeria.Producto" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <link href="css/FileUpload.css" rel="stylesheet" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="heading">
         <h4>Datos de producto</h4>
         <button type="button" onclick="window.open('ProductoListado.aspx','_self')" class="btn">Listado</button>
+        <button type="button" onclick="window.open('ProductoCatalogo.aspx','_self')" class="btn">Catálogo <i class="glyphicon glyphicon-shopping-cart"></i></button>
     </div>
     <div class="row">
         <div class="col-md-8">
@@ -31,14 +33,25 @@
                     <fieldset>
                         <select runat="server" name="estado_producto" class="form-control" id="cmbEstadoProducto">
                             <option value="0">Seleccione estado</option>
-                            <option value="1">Activo</option>
+                            <option value="1" selected="selected">Activo</option>
                             <option value="2">Inactivo</option>
                         </select>
                     </fieldset>
                     <br />
                     <fieldset>
+                        <span class="control-fileupload">
+                            <label for="file">Seleccionar archivo</label>
+                            <asp:FileUpload ID="fupArchivo" onchange="setImagen(this)" runat="server"></asp:FileUpload>
+                        </span>
+                    </fieldset>
+                    <fieldset>
+                        <asp:Image CssClass="img-responsive" Width="50%" runat="server" ID="imgPrevistaFotografia" />
+                    </fieldset>
+                    <br />
+                    <fieldset>
                         <button type="button" id="form-submit" onclick="OperarProducto()" class="btn">Guardar</button>
                         <button type="button" id="form-cancel" onclick="window.open('ProductoListado.aspx','_self')" class="btn">Cancelar</button>
+                        <button type="button" id="form-add" onclick="window.open('Producto.aspx','_self')" class="btn">Agregar otro</button>
                     </fieldset>
                     <fieldset>
                     </fieldset>
@@ -51,9 +64,55 @@
         </div>
     </div>
     <script type="text/javascript">
+        var FileUploadContent;
+        function setImagen(input) {
+            if (input.files && input.files[0]) {
+                var _NombreArchivo = input.files[0].name.split(".");
+                var _ExtensionArchivo = _NombreArchivo[_NombreArchivo.length - 1];
+                if (_ExtensionArchivo.toUpperCase() == "PNG" || _ExtensionArchivo.toUpperCase() == "JPG" || _ExtensionArchivo.toUpperCase() == "JPEG") {
+                    var reader = new FileReader();
+                    var img = document.createElement("img");
+                    reader.onload = function (e) {
+                        debugger;
+                        //img.src = e.target.result;
+                        //var MAX_WIDTH = 800;
+                        //var MAX_HEIGHT = 600;
+                        //var width = img.naturalWidth;
+                        //var height = img.naturalHeight;
+                        ////resize the image if it higher than MAX_WIDTH or MAX_HEIGHT
+                        ////if ((width > MAX_WIDTH) || (height > MAX_HEIGHT)) {
+                        //if ((width / height) > (MAX_WIDTH / MAX_HEIGHT)) {
+                        //    height *= MAX_WIDTH / width;
+                        //    width = MAX_WIDTH;
+                        //}
+                        //else {
+                        //    width *= MAX_HEIGHT / height;
+                        //    height = MAX_HEIGHT;
+                        //}
+                        //var canvas = document.createElement("canvas");
+                        //canvas.width = 800;
+                        //canvas.height = 600;
+                        //var ctx = canvas.getContext("2d");
+                        //ctx.drawImage(img, 0, 0, 800, 600);
+                        //var image = canvas.toDataURL("image/png");//.replace("image/png", "image/octet-stream");
+                        ////}
+                        //$('#ContentPlaceHolder1_imgPrevistaFotografia').attr('src', "");
+                        //$('#ContentPlaceHolder1_imgPrevistaFotografia').attr('src', image);
+                        $('#ContentPlaceHolder1_imgPrevistaFotografia').attr('src', e.target.result);
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                    FileUploadContent = input.files[0];
+                } else {
+                    $('#ContentPlaceHolder1_imgPrevistaFotografia').attr("src", "");
+                }
+            } else {
+                $('#ContentPlaceHolder1_imgPrevistaFotografia').attr("src", "");
+            }
+        }
         $(document).ready(function () {
             $(".alert-danger").hide();
             $(".alert-success").hide();
+            $("#form-add").hide();
             var operacion = "<%=_Operacion%>";
             if (operacion == "1") {
                 $("#form-submit").text("Agregar")
@@ -67,8 +126,13 @@
             if (operacion == "4") {
                 $("#form-submit").attr("disabled", "disabled")
             }
+            $('input[type=file]').change(function () {
+                var t = $(this).val();
+                var labelText = '' + t.substr(12, t.length);
+                $(this).prev('label').text(labelText);
+            });
         });
-        function OperarProducto() {            
+        function OperarProducto() {
             $(".alert-danger").hide();
             $(".alert-success").hide();
             var operacion = "<%=_Operacion%>";
@@ -78,7 +142,7 @@
             var cantidad_producto = $("#ContentPlaceHolder1_txtCantidadProducto").val();
             var id_categoria_producto = $("#ContentPlaceHolder1_cmbIdCategoriaProducto option:selected").val();
             var estado_producto = $("#ContentPlaceHolder1_cmbEstadoProducto option:selected").val();
-            var mensaje = "";            
+            var mensaje = "";
             if (operacion == "")
                 mensaje += "Debe ingresar la operación <br/>";
             if (id_producto == "" && operacion != "1")
@@ -103,19 +167,23 @@
                     "costo_producto": costo_producto,
                     "cantidad_producto": cantidad_producto,
                     "id_categoria_producto": id_categoria_producto,
-                    "estado_producto": estado_producto
+                    "estado_producto": estado_producto,
+                    "imagen_producto": ($('#ContentPlaceHolder1_imgPrevistaFotografia').attr("src"))
                 };
+                debugger;
                 CallAjax("Producto.aspx/OperarProducto", dataValue, callOk)
             }
         }
-        function callOk(retorno) {            
+        function callOk(retorno) {
             if (retorno == 1) {
                 $("#ContentPlaceHolder1_txtIdProducto").val("");
                 $("#ContentPlaceHolder1_txtNombreProducto").val("");
                 $("#ContentPlaceHolder1_txtCostoProducto").val("");
                 $("#ContentPlaceHolder1_txtCantidadProducto").val("");
                 document.getElementById('ContentPlaceHolder1_cmbIdCategoriaProducto').getElementsByTagName('option')[0].selected = 'selected';
-                document.getElementById('ContentPlaceHolder1_cmbEstadoProducto').getElementsByTagName('option')[0].selected = 'selected';          
+                document.getElementById('ContentPlaceHolder1_cmbEstadoProducto').getElementsByTagName('option')[0].selected = 'selected';
+                $("#form-add").show();
+                $("#form-submit").attr("disabled", true);
             }
         }
     </script>

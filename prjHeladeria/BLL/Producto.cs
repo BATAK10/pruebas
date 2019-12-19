@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.UI.WebControls;
 
 namespace prjHeladeria.BLL
 {
@@ -116,6 +118,18 @@ namespace prjHeladeria.BLL
                 _Usuario = value;
             }
         }
+        private string _Imagen;
+        public string Imagen
+        {
+            get
+            {
+                return _Imagen;
+            }
+            set
+            {
+                _Imagen = value;
+            }
+        }
         #endregion
         #region Metodos
         public bool ValidarProducto()
@@ -187,25 +201,32 @@ namespace prjHeladeria.BLL
                     {
                         // Obtener código de categoria_producto siguiente
                         Funciones _f = new Funciones();
-                        int codigoProducto = (int)_f.Consultar(int.Parse(_CodigoProducto), "IFNULL(max(id_producto),0) + 1", "producto", "", "", "");
-                        resultadoQuery = _Conectar.ejecutarComando("insert into producto values ("
+                        int codigoProducto = (int)_f.Consultar(int.Parse(_CodigoProducto), "ISNULL(max(id_producto),0) + 1", "producto", "", "", "");
+
+                        resultadoQuery = _Conectar.ejecutarComando("insert into producto (id_producto ,nombre_producto ,costo_producto ,cantidad_producto ,id_categoria_producto ,estado_producto, usuario ,id_foto) values ("
                             + codigoProducto + ","
                             + "'" + _NombreProducto + "',"
                             + _CostoProducto + ","
                             + _CantidadStock + ","
                             + _CodigoCategoriaProducto + ","
                             + _EstadoProducto + ", '"
-                            + _Usuario
+                            + _Usuario + "', '"
+                            + ((_Imagen == null || _Imagen == "") ? "" : _Imagen)
                             + "')");
                     }
                     if (_TipoDeOperacion == 2)
                     {
+                        string _ImagenSet = "";
+                        if (_Imagen != null)
+                        {
+                            _ImagenSet = ", id_foto = '" + _Imagen + "'";
+                        }
                         resultadoQuery = _Conectar.ejecutarComando("update producto set nombre_producto = '"
                             + _NombreProducto + "', costo_producto="
                             + _CostoProducto + ", cantidad_producto="
                             + _CantidadStock + ", id_categoria_producto="
-                            + _CodigoCategoriaProducto + ", estado_producto='"
-                            + _EstadoProducto + "' where id_producto = "
+                            + _CodigoCategoriaProducto + ", estado_producto="
+                            + _EstadoProducto + _ImagenSet + " where id_producto = "
                             + _CodigoProducto);
                     }
                     if (_TipoDeOperacion == 3)

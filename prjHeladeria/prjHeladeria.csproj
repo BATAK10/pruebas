@@ -84,6 +84,7 @@
     <Content Include="css\bootstrap-theme.min.css" />
     <Content Include="css\bootstrap.css" />
     <Content Include="css\bootstrap.min.css" />
+    <Content Include="css\FileUpload.css" />
     <Content Include="css\images\mayorque.png" />
     <Content Include="css\images\mayorque2.png" />
     <Content Include="css\images\menorque.png" />
@@ -144,6 +145,7 @@
     <Content Include="js\vendor\npm.js" />
     <Content Include="Login.aspx" />
     <Content Include="Producto.aspx" />
+    <Content Include="ProductoCatalogo.aspx" />
     <Content Include="ProductoListado.aspx" />
     <Content Include="Venta.aspx" />
     <Content Include="VentaListado.aspx" />
@@ -178,6 +180,7 @@
     <Compile Include="Clientes.aspx.designer.cs">
       <DependentUpon>Clientes.aspx</DependentUpon>
     </Compile>
+    <Compile Include="DAL\DAL_My.cs" />
     <Compile Include="DAL\DAL.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
@@ -217,6 +220,13 @@
     </Compile>
     <Compile Include="Producto.aspx.designer.cs">
       <DependentUpon>Producto.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ProductoCatalogo.aspx.cs">
+      <DependentUpon>ProductoCatalogo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProductoCatalogo.aspx.designer.cs">
+      <DependentUpon>ProductoCatalogo.aspx</DependentUpon>
     </Compile>
     <Compile Include="ProductoListado.aspx.cs">
       <DependentUpon>ProductoListado.aspx</DependentUpon>
@@ -259,6 +269,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="images\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <PropertyGroup>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
@@ -65,8 +66,8 @@ namespace prjHeladeria
                             _MensajeDeError = "Parametro no encontrado";
                         }
                         else
-                        {                            
-                            dtDatos = (DataTable)CargarDatos.Consultar(dtDatos, "id_producto, nombre_producto, costo_producto, cantidad_producto, id_categoria_producto, estado_producto", "producto", "id_producto,=," + _CodigoProducto+ ";usuario,=," + _usuario, "", "");
+                        {
+                            dtDatos = (DataTable)CargarDatos.Consultar(dtDatos, "id_producto, nombre_producto, costo_producto, cantidad_producto, id_categoria_producto, estado_producto,id_foto", "producto", "id_producto,=," + _CodigoProducto + ";usuario,=," + _usuario, "", "");
                             if (dtDatos.Rows.Count > 0)
                             {
                                 txtIdProducto.Value = dtDatos.Rows[0]["id_producto"].ToString();
@@ -75,6 +76,8 @@ namespace prjHeladeria
                                 txtCantidadProducto.Value = dtDatos.Rows[0]["cantidad_producto"].ToString();
                                 cmbIdCategoriaProducto.Value = dtDatos.Rows[0]["id_categoria_producto"].ToString();
                                 cmbEstadoProducto.Value = dtDatos.Rows[0]["estado_producto"].ToString();
+                                imgPrevistaFotografia.ImageUrl = dtDatos.Rows[0]["id_foto"].ToString(); // @"data:image/png;base64," + 
+
                             }
                             else
                             {
@@ -118,7 +121,7 @@ namespace prjHeladeria
             cmbEstadoProducto.Disabled = true;
         }
         [WebMethod]
-        public static string OperarProducto(string operacion,string usuario, string id_producto, string nombre_producto, string costo_producto, string cantidad_producto, string id_categoria_producto, string estado_producto)
+        public static string OperarProducto(string operacion, string usuario, string id_producto, string nombre_producto, string costo_producto, string cantidad_producto, string id_categoria_producto, string estado_producto, string imagen_producto)
         {
             string _Mensaje = "";
             try
@@ -140,6 +143,16 @@ namespace prjHeladeria
                     {
                         _Producto.CodigoProducto = id_producto;
                     }
+                    if (imagen_producto != null)
+                    {
+                        //var bytes = Convert.FromBase64String(imagen_producto);
+                        //using (var imageFile = new FileStream(HttpContext.Current.Server.MapPath("/images"), FileMode.Open, FileAccess.Read))
+                        //{
+                        //    imageFile.Write(bytes, 0, bytes.Length);
+                        //    imageFile.Flush();
+                        //}
+                        _Producto.Imagen = imagen_producto;
+                    }
                     if (_Producto.OperarProducto())
                     {
 
@@ -153,7 +166,7 @@ namespace prjHeladeria
             }
             catch (Exception ex)
             {
-                _Mensaje = "Error: "+ex.Message;
+                _Mensaje = "Error: " + ex.Message;
             }
             return _Mensaje;
         }

@@ -28,7 +28,7 @@
     <%if (usuario == "carina")
         { %>
     <div class="heading">
-        <h4>Ventas</h4>
+        <h4>Beauty and Glamour</h4>
     </div>
     <div class="row">
         <div class="col-md-12">
