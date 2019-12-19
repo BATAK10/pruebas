@@ -10,6 +10,18 @@ namespace prjHeladeria.BLL
     public class Producto
     {
         #region Propiedades
+        private string _DescripcionProducto;
+        public string DescripcionProducto
+        {
+            get
+            {
+                return _DescripcionProducto;
+            }
+            set
+            {
+                _DescripcionProducto = value;
+            }
+        }
         private string _Mensaje;
         public string Mensaje
         {
@@ -203,7 +215,7 @@ namespace prjHeladeria.BLL
                         Funciones _f = new Funciones();
                         int codigoProducto = (int)_f.Consultar(int.Parse(_CodigoProducto), "ISNULL(max(id_producto),0) + 1", "producto", "", "", "");
 
-                        resultadoQuery = _Conectar.ejecutarComando("insert into producto (id_producto ,nombre_producto ,costo_producto ,cantidad_producto ,id_categoria_producto ,estado_producto, usuario ,id_foto) values ("
+                        resultadoQuery = _Conectar.ejecutarComando("insert into producto (id_producto ,nombre_producto ,costo_producto ,cantidad_producto ,id_categoria_producto ,estado_producto, usuario ,id_foto, descripcion_producto) values ("
                             + codigoProducto + ","
                             + "'" + _NombreProducto + "',"
                             + _CostoProducto + ","
@@ -211,7 +223,8 @@ namespace prjHeladeria.BLL
                             + _CodigoCategoriaProducto + ","
                             + _EstadoProducto + ", '"
                             + _Usuario + "', '"
-                            + ((_Imagen == null || _Imagen == "") ? "" : _Imagen)
+                            + ((_Imagen == null || _Imagen == "") ? "" : _Imagen) + "', '"
+                            + _DescripcionProducto
                             + "')");
                     }
                     if (_TipoDeOperacion == 2)
@@ -226,7 +239,8 @@ namespace prjHeladeria.BLL
                             + _CostoProducto + ", cantidad_producto="
                             + _CantidadStock + ", id_categoria_producto="
                             + _CodigoCategoriaProducto + ", estado_producto="
-                            + _EstadoProducto + _ImagenSet + " where id_producto = "
+                            + _EstadoProducto + ", descripcion_producto='"
+                            + _DescripcionProducto + "' " + _ImagenSet + " where id_producto = "
                             + _CodigoProducto);
                     }
                     if (_TipoDeOperacion == 3)

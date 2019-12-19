@@ -25,11 +25,11 @@ namespace prjHeladeria
 
                 if (_usuario == null || _usuario == "")
                 {
-                    dtDatos = (DataTable)CargarDatos.Consultar(dtDatos, "id_producto,nombre_producto, costo_producto, cantidad_producto, nombre_categoria_producto,CASE WHEN estado_producto= 1 THEN 'ACTIVO' WHEN estado_producto= 2 THEN 'INACTIVO' END AS estado_producto, id_foto", "producto pro inner join categoria_producto cap on pro.id_categoria_producto = cap.id_categoria_producto and cap.usuario = pro.usuario", "pro.usuario,=, 'carina'", "", "");
+                    dtDatos = (DataTable)CargarDatos.Consultar(dtDatos, "id_producto,nombre_producto, costo_producto, cantidad_producto, nombre_categoria_producto,CASE WHEN estado_producto= 1 THEN 'ACTIVO' WHEN estado_producto= 2 THEN 'INACTIVO' END AS estado_producto, id_foto, descripcion_producto", "producto pro inner join categoria_producto cap on pro.id_categoria_producto = cap.id_categoria_producto and cap.usuario = pro.usuario", "pro.usuario,=, 'carina'", "", "");
                 }
                 else
                 {
-                    dtDatos = (DataTable)CargarDatos.Consultar(dtDatos, "id_producto,nombre_producto, costo_producto, cantidad_producto, nombre_categoria_producto,CASE WHEN estado_producto= 1 THEN 'ACTIVO' WHEN estado_producto= 2 THEN 'INACTIVO' END AS estado_producto, id_foto", "producto pro inner join categoria_producto cap on pro.id_categoria_producto = cap.id_categoria_producto and cap.usuario = pro.usuario", "pro.usuario,=," + _usuario, "", "");
+                    dtDatos = (DataTable)CargarDatos.Consultar(dtDatos, "id_producto,nombre_producto, costo_producto, cantidad_producto, nombre_categoria_producto,CASE WHEN estado_producto= 1 THEN 'ACTIVO' WHEN estado_producto= 2 THEN 'INACTIVO' END AS estado_producto, id_foto, descripcion_producto", "producto pro inner join categoria_producto cap on pro.id_categoria_producto = cap.id_categoria_producto and cap.usuario = pro.usuario", "pro.usuario,=," + _usuario, "", "");
                 }
             }
             catch (Exception ex)

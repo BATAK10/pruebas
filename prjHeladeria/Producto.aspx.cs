@@ -67,13 +67,14 @@ namespace prjHeladeria
                         }
                         else
                         {
-                            dtDatos = (DataTable)CargarDatos.Consultar(dtDatos, "id_producto, nombre_producto, costo_producto, cantidad_producto, id_categoria_producto, estado_producto,id_foto", "producto", "id_producto,=," + _CodigoProducto + ";usuario,=," + _usuario, "", "");
+                            dtDatos = (DataTable)CargarDatos.Consultar(dtDatos, "id_producto, nombre_producto, costo_producto, cantidad_producto, id_categoria_producto, estado_producto,id_foto, descripcion_producto", "producto", "id_producto,=," + _CodigoProducto + ";usuario,=," + _usuario, "", "");
                             if (dtDatos.Rows.Count > 0)
                             {
                                 txtIdProducto.Value = dtDatos.Rows[0]["id_producto"].ToString();
                                 txtNombreProducto.Value = dtDatos.Rows[0]["nombre_producto"].ToString();
                                 txtCostoProducto.Value = dtDatos.Rows[0]["costo_producto"].ToString();
                                 txtCantidadProducto.Value = dtDatos.Rows[0]["cantidad_producto"].ToString();
+                                txtDescripcionProducto.Value = dtDatos.Rows[0]["descripcion_producto"].ToString();
                                 cmbIdCategoriaProducto.Value = dtDatos.Rows[0]["id_categoria_producto"].ToString();
                                 cmbEstadoProducto.Value = dtDatos.Rows[0]["estado_producto"].ToString();
                                 imgPrevistaFotografia.ImageUrl = dtDatos.Rows[0]["id_foto"].ToString(); // @"data:image/png;base64," + 
@@ -121,7 +122,7 @@ namespace prjHeladeria
             cmbEstadoProducto.Disabled = true;
         }
         [WebMethod]
-        public static string OperarProducto(string operacion, string usuario, string id_producto, string nombre_producto, string costo_producto, string cantidad_producto, string id_categoria_producto, string estado_producto, string imagen_producto)
+        public static string OperarProducto(string operacion, string usuario, string id_producto, string nombre_producto, string costo_producto, string cantidad_producto, string id_categoria_producto, string estado_producto, string imagen_producto, string descripcion_producto)
         {
             string _Mensaje = "";
             try
@@ -136,6 +137,7 @@ namespace prjHeladeria
                     _Producto.CantidadStock = cantidad_producto;
                     _Producto.CodigoCategoriaProducto = id_categoria_producto;
                     _Producto.EstadoProducto = estado_producto;
+                    _Producto.DescripcionProducto = descripcion_producto;
                     _Producto.Usuario = usuario;
                     _Producto.TipoDeOperacion = int.Parse(_Operacion);
 
@@ -155,7 +157,6 @@ namespace prjHeladeria
                     }
                     if (_Producto.OperarProducto())
                     {
-
                         _Mensaje = "Operación exitosa";
                     }
                     else

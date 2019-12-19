@@ -26,6 +26,9 @@
                         <input runat="server" name="cantidad_producto" type="text" class="form-control" id="txtCantidadProducto" placeholder="Cantidad en stock" required="">
                     </fieldset>
                     <fieldset>
+                        <textarea runat="server" name="descripcion_producto" class="form-control" id="txtDescripcionProducto" placeholder="Descripcion" required=""></textarea>
+                    </fieldset>
+                    <fieldset>
                         <select runat="server" name="id_producto_servicio" class="form-control" id="cmbIdCategoriaProducto">
                         </select>
                     </fieldset>
@@ -142,6 +145,7 @@
             var cantidad_producto = $("#ContentPlaceHolder1_txtCantidadProducto").val();
             var id_categoria_producto = $("#ContentPlaceHolder1_cmbIdCategoriaProducto option:selected").val();
             var estado_producto = $("#ContentPlaceHolder1_cmbEstadoProducto option:selected").val();
+            var descripcion_producto = $("#ContentPlaceHolder1_txtDescripcionProducto").val();
             var mensaje = "";
             if (operacion == "")
                 mensaje += "Debe ingresar la operación <br/>";
@@ -168,7 +172,8 @@
                     "cantidad_producto": cantidad_producto,
                     "id_categoria_producto": id_categoria_producto,
                     "estado_producto": estado_producto,
-                    "imagen_producto": ($('#ContentPlaceHolder1_imgPrevistaFotografia').attr("src"))
+                    "imagen_producto": ($('#ContentPlaceHolder1_imgPrevistaFotografia').attr("src")),
+                    "descripcion_producto": descripcion_producto,
                 };
                 debugger;
                 CallAjax("Producto.aspx/OperarProducto", dataValue, callOk)
@@ -180,6 +185,7 @@
                 $("#ContentPlaceHolder1_txtNombreProducto").val("");
                 $("#ContentPlaceHolder1_txtCostoProducto").val("");
                 $("#ContentPlaceHolder1_txtCantidadProducto").val("");
+                $("#ContentPlaceHolder1_txtDescripcionProducto").val("");
                 document.getElementById('ContentPlaceHolder1_cmbIdCategoriaProducto').getElementsByTagName('option')[0].selected = 'selected';
                 document.getElementById('ContentPlaceHolder1_cmbEstadoProducto').getElementsByTagName('option')[0].selected = 'selected';
                 $("#form-add").show();
