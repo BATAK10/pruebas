@@ -1,10 +1,8 @@
 ﻿
+window.onbeforeunload = window.onunload = function () {
+    $(".loader").hide();
+};
 $(document).ready(function () {
-    window.onload = function () {
-    };
-    window.onunload = function () {
-        $(".loader").hide();
-    };
 
     $(".loader").hide();
     setTimeout(function () {

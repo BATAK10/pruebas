@@ -56,7 +56,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
         <%
-        if (Request.Cookies["usuario"] == null)
+        if (_usuario == null || _usuario == "")
         {
         %>
             $("#menu-principal").hide();

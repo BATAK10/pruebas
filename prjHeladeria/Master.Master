@@ -20,9 +20,9 @@
     </asp:ContentPlaceHolder>
 </head>
 <body>
-    <div class="loader">
+    <%--<div class="loader">
         <img class="imageLoad" src="img/load.gif" />
-    </div>
+    </div>--%>
 
     <nav class="nav" id="menu-principal">
         <div class="burger">
