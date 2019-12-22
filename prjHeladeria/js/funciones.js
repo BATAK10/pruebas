@@ -1,6 +1,17 @@
-﻿$(document).ready(function () {
-    $(".loader").hide();
+﻿
+$(document).ready(function () {
+    window.onload = function () {
+    };
+    window.onunload = function () {
+        $(".loader").hide();
+    };
 
+    $(".loader").hide();
+    setTimeout(function () {
+        $(".loader").fadeOut("slow");
+        $(".loader").attr("style", "display: none;");
+    }
+        , 5000);
     $("button").on("click", function () {
         if (!$(this).hasClass("noShowLoader")) {
             $(".loader").show();
@@ -23,7 +34,7 @@
             $(this).html("<div class='label label-danger'>" + estado.toLowerCase() + "</div>")
         }
     });
-    $.each($(".formatoNumerosConComas"), function () {        
+    $.each($(".formatoNumerosConComas"), function () {
         $(this).text(FormatoNumerosComas($(this).text()));
     });
     $.each($(".formatoNumerosEnteros"), function () {

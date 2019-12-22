@@ -44,6 +44,7 @@ input:-moz-placeholder { /* Firefox 18- */
 }
 
 .loader {
+    display: none;
     position: fixed;
     left: 0px;
     top: 0px;
