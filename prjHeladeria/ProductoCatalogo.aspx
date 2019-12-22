@@ -34,6 +34,9 @@
                             <div class="row">
                                 <div class="text-center text-white font-catalogo"><span class="bold">Precio: Q. </span><span class="formatoNumerosConComas"><%=_Producto["costo_producto"].ToString()%></span></div>
                             </div>
+                            <div class="row">
+                                <div class="text-center text-white font-catalogo"><span class="bold">Descripción: </span><span class=""><%=_Producto["descripcion_producto"].ToString()%></span></div>
+                            </div>
                         </div>
                         <%                        
                             if (contador2 == 4)
