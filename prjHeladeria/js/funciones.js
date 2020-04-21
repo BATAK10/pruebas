@@ -3,6 +3,7 @@ window.onbeforeunload = window.onunload = function () {
     $(".loader").hide();
 };
 $(document).ready(function () {
+    $("#divCarrito").hide();
 
     $(".loader").hide();
     setTimeout(function () {
@@ -77,6 +78,46 @@ $(document).ready(function () {
         yearSuffix: ''
     };
     $.datepicker.setDefaults($.datepicker.regional['es']);
+
+    // pintar carrito de compras
+    var CarritoEventosStr = "n";
+    var cookieArr = document.cookie.split(";");
+
+    for (var i = 0; i < cookieArr.length; i++) {
+        var cookiePair = cookieArr[i].split("=");
+        if ("HeladosEnCarrito" == cookiePair[0].trim()) {
+            CarritoEventosStr = (cookiePair[1]);
+            break;
+        }
+    }
+    var agregados = 0;
+    if (CarritoEventosStr != "n") {
+        var _ArregloTemporal = CarritoEventosStr.toString().split(",");
+        var _ContadorArregloTemporal = _ArregloTemporal.length;
+        var contenidoHtmlCarrito = "";
+        for (var j = 0; j < _ContadorArregloTemporal; j++) {
+            var evento = _ArregloTemporal[j].split(":");
+            var idEvento = evento[0];
+            var nombreEvento = evento[1];
+            if (idEvento != "") {
+                contenidoHtmlCarrito = "<span class='evento' id='" + idEvento + "'><p>" + nombreEvento + "</p></span>";
+                $("#listaProductos").append(contenidoHtmlCarrito);
+                agregados++;
+            }
+
+        }
+        if (agregados > 0) {
+            $("#listaProductos").append("<div class='pull-rigth'><a href='CarritoCursosListado.aspx'>Ir al carrito</a></div>");
+        }
+        $("#numeroEventosCarrito").text(agregados);
+    }
+    $("#iCarrito").on("click", function () {
+        if ($("#divCarrito").is(":visible")) {
+            $("#divCarrito").hide();
+        } else
+            $("#divCarrito").show();
+    });
+
 });
 function FormatoNumerosComas(valor) {
     if ($.trim(valor) == "") {
@@ -195,4 +236,59 @@ function scrollTo(id) {
     $('html, body').animate({
         scrollTop: $(id).offset().top
     }, 1000)
+}
+
+function AgregarAlCarrito(evento) {
+    debugger;
+    CarritoEventos = "";
+    var CarritoEventosStr = "n";
+    var cookieArr = document.cookie.split(";");
+
+    // Loop through the array elements
+    for (var i = 0; i < cookieArr.length; i++) {
+        var cookiePair = cookieArr[i].split("=");
+
+        if ("HeladosEnCarrito" == cookiePair[0].trim()) {
+            CarritoEventosStr = (cookiePair[1]);
+            break;
+        }
+    }
+    if (CarritoEventosStr == "n") {
+    } else {
+        var _ArregloTemporal = CarritoEventosStr.toString().split(",");
+        var _ContadorArregloTemporal = _ArregloTemporal.length;
+        var _Existe = false;
+        for (var j = 0; j < _ContadorArregloTemporal; j++) {
+            if (evento.split(":")[0] == _ArregloTemporal[j].split(":")[0]) {
+                _Existe = true;
+            }
+            if (CarritoEventos == "") {
+                if (_ArregloTemporal[j] != "")
+                    CarritoEventos = _ArregloTemporal[j];
+            } else {
+                if (_ArregloTemporal[j] != "")
+                    CarritoEventos += "," + _ArregloTemporal[j];
+            }
+        }
+    }
+    if (_Existe) {
+        $("#alertaCarrito").removeClass("alert-success")
+        $("#alertaCarrito").addClass("alert-warning")
+        $("#alertaCarrito").text("Este evento ya está agregado en el carrito");
+    } else {
+        $("#alertaCarrito").removeClass("alert-warning")
+        $("#alertaCarrito").addClass("alert-success")
+        $("#alertaCarrito").text("Se ha agregado al carrito con éxito");
+        if (CarritoEventos == "") {
+            CarritoEventos = evento;
+        } else {
+            CarritoEventos += "," + evento;
+        }
+        document.cookie = "HeladosEnCarrito=" + CarritoEventos + ";";
+        //location.reload();
+        var _UlrHref = window.location.href;
+        _UlrHref = _UlrHref.replace("&agr=1", "");
+        window.open(_UlrHref, "_self");
+    }
+
 }

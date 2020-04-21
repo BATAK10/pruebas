@@ -111,6 +111,9 @@
     <Content Include="img\first-bg.png" />
     <Content Include="img\fourth-bg.png" />
     <Content Include="img\helados.jpg" />
+    <Content Include="img\helados.png" />
+    <Content Include="img\helados2.jpg" />
+    <Content Include="img\helados3.jpg" />
     <Content Include="img\home-icon.png" />
     <Content Include="img\load.gif" />
     <Content Include="img\loading.gif" />

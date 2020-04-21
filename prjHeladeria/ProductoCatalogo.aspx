@@ -34,8 +34,9 @@
                             <div class="row">
                                 <div class="text-center text-white font-catalogo"><span class="bold">Precio: Q. </span><span class="formatoNumerosConComas"><%=_Producto["costo_producto"].ToString()%></span></div>
                             </div>
-                            <div class="row">
-                                <div class="text-center text-white font-catalogo"><span class="bold">Descripción: </span><span class=""><%=_Producto["descripcion_producto"].ToString()%></span></div>
+                            <div class="row text-center">
+                                <%--<div class="text-center text-white font-catalogo"><span class="bold">Descripción: </span><span class=""><%=_Producto["descripcion_producto"].ToString()%></span></div>--%>
+                                <a id="<%=_Producto["id_producto"].ToString()%>" onclick="AgregarAlCarritoCompras('<%=_Producto["id_producto"].ToString()%>','<%=_Producto["nombre_producto"].ToString()%>')" class="btn btn-darkturquoise btn-sm"><i class="glyphicon glyphicon-shopping-cart"></i></a>
                             </div>
                         </div>
                         <%                        
@@ -65,6 +66,10 @@
         }
         %>
         });
+        function AgregarAlCarritoCompras(id_producto, nombre_producto) {
+            debugger;
+            AgregarAlCarrito(id_producto + ":" + nombre_producto);
+        }
     </script>
     <style>
         .img-row {

@@ -5,6 +5,28 @@ Stacked Template
 http://www.templatemo.com/tm-505-stacked
 
 */
+/*
+Estilos del carrito
+*/
+
+#divCarrito {
+    right: 0em;
+    position: fixed;
+    z-index: 100;
+    width: 390px;
+    height: 431px;
+    overflow: auto;
+    font-size: 12px;
+}
+
+.evento p {
+    text-transform: lowercase;
+}
+
+    .evento p:first-letter {
+        text-transform: uppercase;
+    }
+
 input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
     color: white !important;
 }
@@ -179,13 +201,13 @@ ul {
     left: 0;
     text-decoration: none;
     font-size: 24px;
-    background: #3e4e62;
+    background: darkturquoise /*#3e4e62*/;
     -webkit-transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
     .nav__link:hover {
-        background: #fa5252;
+        background: palegreen /*#fa5252*/;
     }
 
 @media (max-width: 640px) {
@@ -211,14 +233,14 @@ ul {
     -ms-flex-align: center;
     align-items: center;
     z-index: 2;
-    background: #455871;
+    background: darkturquoise /*#455871*/;
     cursor: pointer;
     -webkit-transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
     .burger:hover {
-        background: #3e4e62;
+        background: palegreen /*#3e4e62*/;
     }
 
 .burger__patty {
@@ -335,7 +357,8 @@ ul {
 
 .b-blue {
     margin-bottom: -2px;
-    background-image: url(../img/first-bg.png);
+    /*background-image: url(../img/first-bg.png);*/
+    background-image: url(../img/helados3.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     width: 100%;
@@ -406,8 +429,8 @@ ul {
 
     .home-content .home-box-content {
         /*margin-top: 45px;*/
-        background-color: #455871;
-        position: relative;
+        /*background-color: palegreen /*#455871*/;
+        */ position: relative;
         padding: 30px;
         display: block;
     }
@@ -1302,4 +1325,15 @@ body.lb-disable-scrolling {
 
 .owl-carousel .owl-nav {
     display: none;
+}
+
+.text-darkturquoise {
+    color: palegreen !important;
+}
+
+.btn-darkturquoise {
+    background-image: linear-gradient(to bottom,palegreen 0,#419641 100%);
+    color: white;
+    border-color: palegreen;
+    background-repeat: repeat-x;
 }

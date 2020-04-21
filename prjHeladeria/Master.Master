@@ -52,10 +52,10 @@
             </li>
         </ul>
     </nav>
-    <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: #455871">
+    <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: darkturquoise/*#455871*/">
         <ul class="navbar-nav ml-auto ul-nav">
             <div class="topbar-divider d-none d-sm-block"></div>
-
+            <div id="iCarrito"><i class="text-darkturquoise glyphicon glyphicon-shopping-cart glyphicon-2x"></i><span style="vertical-align: super;"><i id="numeroEventosCarrito" class="badge bg-primary"></i></span></div>
             <!-- Nav Item - User Information -->
             <li id="usuario-conectarse" class="nav-item dropdown no-arrow" style="padding-top: 10px;">
                 <%if (_NombreUsuario == "")
@@ -93,6 +93,20 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-md-12">
+                                <asp:ContentPlaceHolder runat="server" ID="ContentPlaceHolder2">
+                                    <%-- Carrito de compras --%>
+
+                                    <div class="row" id="divCarrito" style="background: white;">
+                                        <div class="heading">
+                                            <h6>Productos agregados <i class="glyphicon glyphicon-shopping-cart"></i></h6>
+                                            <%--<button type="button" onclick="window.open('ProductoListado.aspx','_self')" class="btn">Ir al carrito <i class="glyphicon glyphicon-shopping-cart"></i></button>--%>
+                                        </div>
+                                        <div class="contat-form">
+                                            <div id="listaProductos" class="list-group">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </asp:ContentPlaceHolder>
                                 <div class="contact-content">
                                     <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
                                     </asp:ContentPlaceHolder>
@@ -109,6 +123,6 @@
     <script src="js/main.js"></script>
     <script src="js/select2.full.js"></script>
     <script src="js/jquery-ui.js"></script>
-    <script src="js/funciones.js"></script>    
+    <script src="js/funciones.js"></script>
 </body>
 </html>
