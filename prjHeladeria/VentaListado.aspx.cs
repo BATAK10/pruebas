@@ -32,7 +32,7 @@ namespace prjHeladeria
                         _usuario = Request.Cookies["usuario"].Value;
                 }
 
-                dtDatos = (DataTable)CargarDatos.Consultar(dtDatos, "id_venta, nombre_cliente, fecha_venta, fecha_entrega_venta, costo_total_venta,CASE WHEN estado_venta= 1 THEN 'Pendiente' WHEN estado_venta= 2 THEN 'Entregado' END AS estado_venta", "venta ven inner join cliente cli on ven.id_cliente_venta = cli.id_cliente and ven.usuario = cli.usuario", "ven.usuario,=," + _usuario, "", "id_venta");
+                dtDatos = (DataTable)CargarDatos.Consultar(dtDatos, "id_venta,case when id_cliente_venta=0 then pedido_por else nombre_cliente end as nombre_cliente, fecha_venta, fecha_entrega_venta, costo_total_venta,CASE WHEN estado_venta= 1 THEN 'Pendiente' WHEN estado_venta= 2 THEN 'Entregado' END AS estado_venta, case when tipo_venta = '2' then 'Pedido' ELSE 'Venta' END as tipo_venta", "venta ven left outer join cliente cli on ven.id_cliente_venta = cli.id_cliente and ven.usuario = cli.usuario", "ven.usuario,=," + _usuario, "", "id_venta");
                 dgvListadoVenta.DataSource = dtDatos;
                 dgvListadoVenta.DataBind();
             }

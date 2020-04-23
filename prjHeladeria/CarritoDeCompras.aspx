@@ -56,16 +56,27 @@
                                 <td></td>
                             </tr>
                         </table>
+                        <fieldset>
+                            <input name="id_cliente" type="text" class="form-control" id="txtIdCliente" placeholder="Escriba su nombre y número de teléfono o código personal">
+                        </fieldset>
                     </div>
                     <fieldset>
                         <button type="button" id="form-submit" onclick="OperarPedido()" class="btn">Realizar pedido</button>
-                        <button type="button" id="form-cancel" onclick="window.open('ProductoCatalogo.aspx','_self')" class="btn">Cancelar</button>
+                        <button type="button" id="form-cancel" onclick="window.open('ProductoCatalogo.aspx','_self')" class="btn">Ir al catalogo</button>
                     </fieldset>
+                    <div class="alert alert-danger">
+                    </div>
+                    <div class="alert alert-success">
+                    </div>
                 </form>
             </div>
         </div>
     </div>
     <script type="text/javascript">
+        $(document).ready(function () {
+            $(".alert-danger").hide();
+            $(".alert-success").hide();
+        });
         function eliminarCurso(idproducto) {
             $("#id" + idproducto).remove();
             CarritoEventos = "";
@@ -117,7 +128,8 @@
             $(".alert-danger").hide();
             $(".alert-success").hide();
             var operacion = "<%=_Operacion%>";
-            var id_cliente_venta = "1";
+            debugger;
+            var id_cliente_venta = $("#txtIdCliente").val();
             var costo_total_venta = $("#costoTotal").text();
             var estado_venta = 1;//$("#ContentPlaceHolder1_cmbEstadoVenta option:selected").val();
             var mensaje = "";
@@ -164,6 +176,11 @@
             debugger;
             if (retorno == 1) {
                 document.cookie = "HeladosEnCarrito=;";
+                //sendMail("Nuevo pedido", "Se ha solicitado un pedido. </br> <a href='http://localhost:57719/VentaListado.aspx'>Ver pedidos</a>");
+                enviarCorreoJS($("#txtIdCliente").val());
+                $("#txtIdCliente").text("");
+                $("#form-submit").addClass("disabled");
+                $(".alert-success").html("Se ha enviado su pedido exitosamente. En breve nos comunicaremos con su persona.");
             }
         }
     </script>

@@ -234,7 +234,7 @@ namespace prjHeladeria.BLL
             {
                 _Mensaje += "Ingrese la cantidad en stock del producto"; _Resultado = false;
             }
-            if (dtVentaDetalle.Rows.Count == 0)
+            if (dtVentaDetalle.Rows.Count == 0 && _TipoDeOperacion!=3)
             {
                 _Mensaje += "Ingrese detalle de la venta"; _Resultado = false;
             }
@@ -269,9 +269,10 @@ namespace prjHeladeria.BLL
                         if (resultadoQuery == 1)
                         {
                             // Se agrega el detalle
+                            int codigoVentaDetalle = 0;
                             foreach (DataRow _Detalle in dtVentaDetalle.Rows)
                             {
-                                int codigoVentaDetalle = (int)_f.Consultar(int.Parse(_CodigoVenta), "IFNULL(max(id_venta_detalle),0) + 1", "venta_detalle", "", "", "");
+                                codigoVentaDetalle = (int)_f.Consultar(codigoVentaDetalle, "ISNULL(max(id_venta_detalle),0) + 1", "venta_detalle", "", "", "");
                                 resultadoQuery = _Conectar.ejecutarComando("insert into venta_detalle (id_venta,id_venta_detalle, id_categoria_producto_venta, id_producto_venta, cantidad_venta, costo_total_venta, usuario) values ("
                                     + codigoVenta + ","
                                     + codigoVentaDetalle + ","
@@ -297,15 +298,49 @@ namespace prjHeladeria.BLL
                     }
                     if (_TipoDeOperacion == 2)
                     {
-                        resultadoQuery = _Conectar.ejecutarComando("update venta set id_categoria_producto_venta = "
-                            + _CodigoCategoriaProducto + ", id_cliente_venta="
-                            + _CodigoClienteVenta + ", id_producto_venta="
-                            + _CodigoProducto + ", fecha_entrega_venta='"
-                            + _FechaEntregaVenta + "', cantidad_venta="
-                            + _CantidadVenta + ", costo_total_venta="
-                            + _CostoTotalVenta + ", estado_venta="
-                            + _EstadoVenta + " where id_venta = "
+                        resultadoQuery = _Conectar.ejecutarComando("update venta set id_cliente_venta = "
+                            + _CodigoClienteVenta + ", fecha_entrega_venta='"
+                            + _FechaEntregaVenta + "', estado_venta="
+                            + _EstadoVenta + ", costo_total_venta="
+                            + _CostoTotalVenta + ", tipo_venta="
+                            + "NULL  where id_venta = "
                             + _CodigoVenta);
+                        if (resultadoQuery == 1)
+                        {
+                            //Se eliminan los detalles
+                            resultadoQuery = _Conectar.ejecutarComando("delete from venta_detalle where id_venta = "
+                                + _CodigoVenta);
+                            // Se agregan los nuevos detalles
+                            Funciones _f = new Funciones();
+                            if (resultadoQuery != -1)
+                            {
+                                int codigoVentaDetalle = 0;
+                                foreach (DataRow _Detalle in dtVentaDetalle.Rows)
+                                {
+                                    codigoVentaDetalle = (int)_f.Consultar(codigoVentaDetalle, "ISNULL(max(id_venta_detalle),0) + 1", "venta_detalle", "", "", "");
+                                    resultadoQuery = _Conectar.ejecutarComando("insert into venta_detalle (id_venta,id_venta_detalle, id_categoria_producto_venta, id_producto_venta, cantidad_venta, costo_total_venta, usuario) values ("
+                                        + _CodigoVenta + ","
+                                        + codigoVentaDetalle + ","
+                                        + _Detalle["id_categoria_producto"] + ","
+                                        + _Detalle["id_producto"] + ","
+                                        + _Detalle["cantidad_producto"] + ","
+                                        + _Detalle["costo_total"] + ", '"
+                                        + _Usuario
+                                        + "')");
+
+                                    // Se hace la descarga de stock del producto
+                                    if (resultadoQuery == 1)
+                                    {
+                                        int cantidadStock = 0;
+                                        cantidadStock = (int)_f.Consultar(cantidadStock, "cantidad_producto", "producto", "id_producto,=," + _Detalle["id_producto"], "", "");
+                                        cantidadStock = cantidadStock - int.Parse(_Detalle["cantidad_producto"].ToString());
+                                        resultadoQuery = _Conectar.ejecutarComando("update producto set cantidad_producto = "
+                                    + cantidadStock + " where id_producto = "
+                                    + _Detalle["id_producto"]);
+                                    }
+                                }
+                            }
+                        }
                     }
                     if (_TipoDeOperacion == 3)
                     {

@@ -11,6 +11,14 @@
         <div class="col-md-10">
             <div class="contat-form">
                 <form id="contact" action="#" method="post">
+                    <%if (_NombreClientePedidoAnonimo != "")
+                        {
+                    %>
+                    <h4 class="text-center text-white">Pedido por: <%=_NombreClientePedidoAnonimo %></h4>
+                    <br />
+                    <%
+                        }
+                    %>
                     <fieldset>
                         <input runat="server" name="id_venta" type="number" class="form-control" id="txtIdVenta" placeholder="Código" disabled>
                     </fieldset>
@@ -18,18 +26,16 @@
                         <asp:DropDownList runat="server" CssClass="form-control" ID="cmbIdClienteVenta"></asp:DropDownList>
                     </fieldset>
                     <fieldset>
-                        <select runat="server" class="form-control" onchange="ObtenerProducto()" id="cmbIdCategoriaProductoVenta"></select>
-                    </fieldset>
-
-                    <fieldset>
-                        <select runat="server" class="form-control" onchange="ObtenerPrecioUnitario()" id="cmbIdProductoVenta"></select>
-                    </fieldset>
-
-                    <fieldset>
                         <input runat="server" name="fecha_venta" type="text" class="form-control datepicker" id="txtFechaVenta2" placeholder="Fecha de venta" required="" disabled>
                     </fieldset>
                     <fieldset>
                         <input runat="server" name="fecha_entrega_venta" class="form-control datepicker" id="txtFechaEntregaVenta" placeholder="Fecha de entrega" required="">
+                    </fieldset>
+                    <fieldset>
+                        <select runat="server" class="form-control" onchange="ObtenerProducto()" id="cmbIdCategoriaProductoVenta"></select>
+                    </fieldset>
+                    <fieldset>
+                        <select runat="server" class="form-control" onchange="ObtenerPrecioUnitario()" id="cmbIdProductoVenta"></select>
                     </fieldset>
                     <div class="home-content">
                         <h5 style="color: white">Detalle de venta</h5>
@@ -38,11 +44,11 @@
                                 <div class="home-box-content">
                                     <fieldset>
                                         <input runat="server" name="cantidad_venta" type="number" class="form-control" id="txtCantidadVenta" placeholder="Cantidad" required="">
-                                        <input runat="server" name="costo_unidad" type="number" class="form-control" id="txtCostoUnidad" placeholder="Costo unidad" required="" disabled>
+                                        <input runat="server" name="costo_unidad" type="number" class="form-control formatoNumerosConComas" id="txtCostoUnidad" placeholder="Costo unidad" required="" disabled>
                                         <input runat="server" name="cantidad_stock_producto" type="number" class="form-control" id="txtCantidadStockProducto" placeholder="Cantidad en stock" required="" disabled>
                                     </fieldset>
                                     <fieldset>
-                                        <input runat="server" name="costo_total_producto" type="number" class="form-control" id="txtCostoTotal" placeholder="Costo total" disabled required="">
+                                        <input runat="server" name="costo_total_producto" type="number" class="form-control formatoNumerosConComas" id="txtCostoTotal" placeholder="Costo total" disabled required="">
                                     </fieldset>
                                     <fieldset>
                                         <button type="button" id="form-submit-detail" onclick="OperarVentaDetalle()" class="btn noShowLoader"><i class="glyphicon glyphicon-plus"></i></button>
@@ -67,7 +73,7 @@
                         </div>
                     </div>
                     <fieldset>
-                        <input runat="server" name="costo_total_venta" type="number" class="form-control" id="txtCostoTotalVenta" placeholder="Costo total" disabled required="">
+                        <input runat="server" name="costo_total_venta" type="number" class="form-control formatoNumerosConComas" id="txtCostoTotalVenta" placeholder="Costo total" disabled required="">
                     </fieldset>
                     <fieldset>
                         <select runat="server" name="estado_venta" class="form-control" id="cmbEstadoVenta">
@@ -105,17 +111,29 @@
                 $("#form-submit").text("Modificar")
             }
             if (operacion == "3") {
-                LlenarGridVentaDetalle();            
+                LlenarGridVentaDetalle();
                 $("#form-submit").text("Eliminar")
             }
             if (operacion == "4") {
                 LlenarGridVentaDetalle();
-                $("#form-submit-detail").attr("disabled", "disabled");
-                $("#form-submit").attr("disabled", "disabled")
+                if ("<%=_TipoVenta%>" != "2") {
+                    $("#form-submit-detail").attr("disabled", "disabled");
+                    $("#form-submit").attr("disabled", "disabled");
+                } else {
+                    costo_total_venta_ = $("#ContentPlaceHolder1_txtCostoTotalVenta").val();
+                }
             }
         });
         function LlenarGridVentaDetalle() {
+            debugger;
+            var _HabilitarBotonDetalle = "";
             var table = document.getElementById("tblVentaDetalle");
+            if (<%=_TipoVenta%> == "2") {
+                _HabilitarBotonDetalle = "onclick='EliminarFila(this)'";
+            } else {
+                _HabilitarBotonDetalle = "disabled='disabled'";
+            }
+
             <%
         foreach (System.Data.DataRow _Detalle in dtDatosDetalle.Rows)
         {
@@ -140,7 +158,7 @@
             cantidad.innerHTML = "<%=_Detalle["cantidad_venta"]%>";
             costo_unitario.innerHTML = "";
             costo_total.innerHTML = "<%=_Detalle["costo_total_venta"]%>";
-            btnEliminar.innerHTML = "<button disabled='disabled' type='button' id='" + contadorFilas + "' class='btn'><i class='glyphicon glyphicon-remove'></i></button>";
+            btnEliminar.innerHTML = "<button " + _HabilitarBotonDetalle + "  type='button' id='" + contadorFilas + "' class='btn noShowLoader'><i class='glyphicon glyphicon-remove'></i></button>";
             <%
         }
             %>
@@ -148,7 +166,6 @@
         function OperarVentaDetalle() {
             var operacion = 1;
             var mensaje = "";
-
             var id_categoria_producto = $("#ContentPlaceHolder1_cmbIdCategoriaProductoVenta option:selected");
             var id_producto = $("#ContentPlaceHolder1_cmbIdProductoVenta option:selected");
             var cantidad_producto = $("#ContentPlaceHolder1_txtCantidadVenta");
@@ -197,7 +214,7 @@
                 cantidad.innerHTML = cantidad_producto.val();
                 costo_unitario.innerHTML = costo_unidad_producto.val();
                 costo_total.innerHTML = costo_total_producto.val();
-                btnEliminar.innerHTML = "<button onclick='EliminarFila(this)' type='button' id='" + contadorFilas + "' class='btn'><i class='glyphicon glyphicon-remove'></i></button>";
+                btnEliminar.innerHTML = "<button onclick='EliminarFila(this)' type='button' id='" + contadorFilas + "' class='btn noShowLoader'><i class='glyphicon glyphicon-remove'></i></button>";
                 costo_total_venta_ = parseFloat(costo_total_venta_) + parseFloat(costo_total_producto.val());
                 $("#ContentPlaceHolder1_txtCostoTotalVenta").val(costo_total_venta_);
                 // Limpiar campos
@@ -210,18 +227,19 @@
             }
         }
         function EliminarFila(botonEliminar) {
-
+            debugger;
             var idFila = $(botonEliminar).attr("id");
             var table = document.getElementById("tblVentaDetalle");
             var costo_total_fila = table.rows.item(idFila).cells[7].innerHTML;
             costo_total_venta_ = parseFloat(costo_total_venta_) - parseFloat(costo_total_fila);
             $("#ContentPlaceHolder1_txtCostoTotalVenta").val(costo_total_venta_);
             table.deleteRow(idFila);
+
         }
         function OperarVenta() {
             $(".alert-danger").hide();
             $(".alert-success").hide();
-            var operacion = "<%=_Operacion%>";
+            var operacion = "<%=_TipoVenta=="2" ? "2" : _Operacion%>";
             var id_venta = $("#ContentPlaceHolder1_txtIdVenta").val();
             var id_cliente_venta = $("#ContentPlaceHolder1_cmbIdClienteVenta option:selected").val();
             //var id_categoria_producto_venta = $("#ContentPlaceHolder1_cmbIdCategoriaProductoVenta option:selected").val();

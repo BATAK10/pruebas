@@ -248,7 +248,7 @@ namespace prjHeladeria.BLL
                 Funciones _f = new Funciones();
                 _CodigoClienteVenta = "0";
                 _CodigoClienteVenta = _f.Consultar(int.Parse(_CodigoClienteVenta), "id_cliente", "cliente", "id_cliente,=," + _ClientePedidoPor, "", "").ToString();
-               
+
             }
             catch (Exception ex)
             {
@@ -286,9 +286,10 @@ namespace prjHeladeria.BLL
                         if (resultadoQuery == 1)
                         {
                             // Se agrega el detalle
+                            int codigoVentaDetalle = 0;
                             foreach (DataRow _Detalle in dtVentaDetalle.Rows)
                             {
-                                int codigoVentaDetalle = (int)_f.Consultar(int.Parse(_CodigoVenta), "IFNULL(max(id_venta_detalle),0) + 1", "venta_detalle", "", "", "");
+                                codigoVentaDetalle = (int)_f.Consultar(codigoVentaDetalle, "ISNULL(max(id_venta_detalle),0) + 1", "venta_detalle", "", "", "");
                                 resultadoQuery = _Conectar.ejecutarComando("insert into venta_detalle (id_venta,id_venta_detalle, id_categoria_producto_venta, id_producto_venta, cantidad_venta, costo_total_venta, usuario) values ("
                                     + codigoVenta + ","
                                     + codigoVentaDetalle + ","

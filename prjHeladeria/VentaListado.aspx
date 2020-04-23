@@ -39,6 +39,10 @@
                             <HeaderStyle CssClass="warning" />
                             <ItemStyle CssClass="info" />
                         </asp:HyperLinkField>
+                        <asp:BoundField DataField="TIPO_VENTA" HeaderText="Tipo">
+                            <HeaderStyle CssClass="warning text-center" />
+                            <ItemStyle CssClass="info pedido text-center" />
+                        </asp:BoundField>
                         <asp:HyperLinkField DataTextField="FECHA_VENTA" HeaderText="Fecha" DataTextFormatString="{0:dd/MM/yyyy}" DataNavigateUrlFormatString="~/Venta.aspx?idv={0}&o=4" DataNavigateUrlFields="ID_VENTA">
                             <HeaderStyle CssClass="warning" />
                             <ItemStyle CssClass="info" />
@@ -51,7 +55,7 @@
 
                         <asp:BoundField DataField="COSTO_TOTAL_VENTA" HeaderText="Costo total">
                             <HeaderStyle CssClass="warning text-center" />
-                            <ItemStyle CssClass="info text-right" />
+                            <ItemStyle CssClass="info text-right formatoNumerosConComas" />
                         </asp:BoundField>
                         <asp:BoundField DataField="ESTADO_VENTA" HeaderText="Estado">
                             <HeaderStyle CssClass="warning text-center" />

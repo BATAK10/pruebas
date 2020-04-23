@@ -28,6 +28,8 @@ namespace prjHeladeria
         public string _Operacion = "";
         private string _CodigoVenta = "";
         public string _usuario = "";
+        public string _TipoVenta = "1";
+        public string _NombreClientePedidoAnonimo = "";
         protected void Page_Load(object sender, EventArgs e)
         {
             try
@@ -83,16 +85,20 @@ namespace prjHeladeria
                         else
                         {
                             // ven inner join categoria_producto cat on ven.id_categoria_producto_venta = cat.id_categoria_producto and ven.usuario = cat.usuario inner join producto pro on ven.id_producto_venta = pro.id_producto and ven.usuario = pro.usuario
-                            dtDatos = (DataTable)CargarDatos.Consultar(dtDatos, "id_venta, id_cliente_venta, fecha_venta,fecha_entrega_venta, costo_total_venta, estado_venta", "venta", "id_venta,=," + _CodigoVenta + ";usuario,=," + _usuario, "", "");
+                            dtDatos = (DataTable)CargarDatos.Consultar(dtDatos, "id_venta, id_cliente_venta, fecha_venta,fecha_entrega_venta, costo_total_venta, estado_venta, tipo_venta, pedido_por", "venta", "id_venta,=," + _CodigoVenta + ";usuario,=," + _usuario, "", "");
                             if (dtDatos.Rows.Count > 0)
                             {
                                 txtIdVenta.Value = dtDatos.Rows[0]["id_venta"].ToString();
                                 cmbIdClienteVenta.SelectedValue = dtDatos.Rows[0]["id_cliente_venta"].ToString();
                                 txtFechaVenta2.Value = DateTime.Parse(dtDatos.Rows[0]["fecha_venta"].ToString()).ToShortDateString();
-                                txtFechaEntregaVenta.Value = DateTime.Parse(dtDatos.Rows[0]["fecha_entrega_venta"].ToString()).ToShortDateString();
+                                txtFechaEntregaVenta.Value = dtDatos.Rows[0]["fecha_entrega_venta"] == DBNull.Value ? "" : DateTime.Parse(dtDatos.Rows[0]["fecha_entrega_venta"].ToString()).ToShortDateString();
                                 txtCostoTotalVenta.Value = dtDatos.Rows[0]["costo_total_venta"].ToString();
                                 cmbEstadoVenta.Value = dtDatos.Rows[0]["estado_venta"].ToString();
-
+                                _TipoVenta = (dtDatos.Rows[0]["tipo_venta"] == DBNull.Value || dtDatos.Rows[0]["tipo_venta"] == "") ? "1" : dtDatos.Rows[0]["tipo_venta"].ToString();
+                                if (cmbIdClienteVenta.SelectedValue == "0" && _TipoVenta == "2")
+                                {
+                                    _NombreClientePedidoAnonimo = dtDatos.Rows[0]["pedido_por"].ToString();
+                                }
                                 // Cargar detalle de venta
                                 dtDatosDetalle = (DataTable)CargarDatos.Consultar(dtDatosDetalle, "id_venta, id_venta_detalle,id_categoria_producto_venta,nombre_categoria_producto, id_producto_venta, nombre_producto,cantidad_venta, costo_total_venta", "venta_detalle ven inner join categoria_producto cat on ven.id_categoria_producto_venta = cat.id_categoria_producto inner join producto pro on ven.id_producto_venta = pro.id_producto ", "id_venta,=," + _CodigoVenta, "", "");
                             }
@@ -105,7 +111,8 @@ namespace prjHeladeria
                     // se bloque todo porque es consulta
                     if (_Operacion == "4")
                     {
-                        Inhabilitar();
+                        if (_TipoVenta != "2")
+                            Inhabilitar();
                     }
                     // para eliminar se bloquean los campos menos botones
                     if (_Operacion == "3")

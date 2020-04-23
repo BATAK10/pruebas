@@ -31,24 +31,6 @@ namespace prjHeladeria {
         protected global::System.Web.UI.WebControls.DropDownList cmbIdClienteVenta;
         
         /// <summary>
-        /// cmbIdCategoriaProductoVenta control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlSelect cmbIdCategoriaProductoVenta;
-        
-        /// <summary>
-        /// cmbIdProductoVenta control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlSelect cmbIdProductoVenta;
-        
-        /// <summary>
         /// txtFechaVenta2 control.
         /// </summary>
         /// <remarks>
@@ -65,6 +47,24 @@ namespace prjHeladeria {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputText txtFechaEntregaVenta;
+        
+        /// <summary>
+        /// cmbIdCategoriaProductoVenta control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlSelect cmbIdCategoriaProductoVenta;
+        
+        /// <summary>
+        /// cmbIdProductoVenta control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlSelect cmbIdProductoVenta;
         
         /// <summary>
         /// txtCantidadVenta control.

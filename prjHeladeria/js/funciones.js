@@ -29,6 +29,14 @@ $(document).ready(function () {
             $(this).html("<div class='label label-danger'>" + estado.toLowerCase() + "</div>")
         }
     });
+    $.each($(".pedido"), function () {
+        var pedido = $(this).text();
+        if (pedido == "Pedido") {
+            $(this).html("<div class='label label-danger'>" + pedido.toLowerCase() + "</div>")
+        } else if (pedido == "Venta") {
+            $(this).html("<div class='label label-primary'>" + pedido.toLowerCase() + "</div>")
+        }
+    });
     $.each($(".formatoNumerosConComas"), function () {
         $(this).text(FormatoNumerosComas($(this).text()));
     });
@@ -294,4 +302,26 @@ function AgregarAlCarrito(evento) {
         window.open(_UlrHref, "_self");
     }
 
+}
+function sendMail(subject, body) {
+    var link = "mailto:perlavemis@gmail.com"
+        + "?cc=dwdrumsbryan@gmail.com"
+        + "&subject=" + escape(subject)
+        + "&body=" + escape(body)
+        ;
+    window.location.href = link;
+}
+
+function enviarCorreoJS(pedidoPor) {
+    debugger;
+    var template_params = {
+        "reply_to": "perlavemis@gmail.com",
+        "from_name": "Heladería",
+        "to_name": "Perla",
+        "message_html": "Se ha ingresado un nuevo pedido por "+pedidoPor+". </br> <a href='http://localhost:57719/VentaListado.aspx'>Ver pedidos</a>"
+    }
+
+    var service_id = "default_service";
+    var template_id = "template_mG7uT5fp";
+    emailjs.send(service_id, template_id, template_params);
 }
