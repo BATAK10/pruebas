@@ -20,9 +20,9 @@
     </asp:ContentPlaceHolder>
 </head>
 <body>
-    <%--<div class="loader">
+    <div class="loader" style="display: none;">
         <img class="imageLoad" src="img/load.gif" />
-    </div>--%>
+    </div>
 
     <nav class="nav" id="menu-principal">
         <div class="burger">
@@ -52,10 +52,17 @@
             </li>
         </ul>
     </nav>
-    <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: darkturquoise/*#455871*/">
-        <ul class="navbar-nav ml-auto ul-nav">
-            <div class="topbar-divider d-none d-sm-block"></div>
-            <div id="iCarrito"><i class="text-darkturquoise glyphicon glyphicon-shopping-cart glyphicon-2x"></i><span style="vertical-align: super;"><i id="numeroEventosCarrito" class="badge bg-primary"></i></span></div>
+    <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: darkturquoise; z-index: 100; width: 100%; position: fixed !important; /*#455871*/">
+        <ul class="navbar-nav ml-auto ul-nav" style="display: flex;">
+            <div class="text-center logo-nav" style="margin-right: 35%">
+                <a href="Default.aspx">
+                    <img src="img/logo1.png" style="width: 95px; height: 55px" /></a>
+            </div>
+            <div id="iCarrito" style="padding-right: 10px;">
+                <i class="text-darkturquoise glyphicon glyphicon-shopping-cart glyphicon-3x"></i>
+                <span style="vertical-align: super;"><i id="numeroEventosCarrito" class="label label-primary"></i></span>
+
+            </div>
             <!-- Nav Item - User Information -->
             <li id="usuario-conectarse" class="nav-item dropdown no-arrow" style="padding-top: 10px;">
                 <%if (_NombreUsuario == "")
@@ -88,24 +95,24 @@
     <script src="js/vendor/jquery-1.11.2.min.js"></script>
     <form id="form1" runat="server">
         <section class="panel b-blue" id="1">
+            <%-- Carrito de compras --%>
+            <div class="row" id="divCarrito" style="background: white;">
+                <div class="heading text-center">
+                    <h5>Productos agregados <i class="glyphicon glyphicon-shopping-cart"></i></h5>
+                    <%--<button type="button" onclick="window.open('ProductoListado.aspx','_self')" class="btn">Ir al carrito <i class="glyphicon glyphicon-shopping-cart"></i></button>--%>
+                </div>
+                <div class="contat-form">
+                    <div id="listaProductos" class="list-group">
+                    </div>
+                </div>
+            </div>
             <article class="panel__wrapper">
                 <div class="panel__content">
+                    <div id="alertaCarrito" class="alert" style="display: none"></div>
                     <div class="container">
                         <div class="row">
                             <div class="col-md-12">
                                 <asp:ContentPlaceHolder runat="server" ID="ContentPlaceHolder2">
-                                    <%-- Carrito de compras --%>
-
-                                    <div class="row" id="divCarrito" style="background: white;">
-                                        <div class="heading">
-                                            <h6>Productos agregados <i class="glyphicon glyphicon-shopping-cart"></i></h6>
-                                            <%--<button type="button" onclick="window.open('ProductoListado.aspx','_self')" class="btn">Ir al carrito <i class="glyphicon glyphicon-shopping-cart"></i></button>--%>
-                                        </div>
-                                        <div class="contat-form">
-                                            <div id="listaProductos" class="list-group">
-                                            </div>
-                                        </div>
-                                    </div>
                                 </asp:ContentPlaceHolder>
                                 <div class="contact-content">
                                     <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">

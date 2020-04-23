@@ -4,13 +4,9 @@ window.onbeforeunload = window.onunload = function () {
 };
 $(document).ready(function () {
     $("#divCarrito").hide();
-
+    $("#alertaCarrito").hide();
     $(".loader").hide();
-    setTimeout(function () {
-        $(".loader").fadeOut("slow");
-        $(".loader").attr("style", "display: none;");
-    }
-        , 5000);
+
     $("button").on("click", function () {
         if (!$(this).hasClass("noShowLoader")) {
             $(".loader").show();
@@ -107,7 +103,7 @@ $(document).ready(function () {
 
         }
         if (agregados > 0) {
-            $("#listaProductos").append("<div class='pull-rigth'><a href='CarritoCursosListado.aspx'>Ir al carrito</a></div>");
+            $("#listaProductos").append("<div style='float:right'><a href='CarritoDeCompras.aspx'>Ir al carrito</a></div>");
         }
         $("#numeroEventosCarrito").text(agregados);
     }
@@ -274,11 +270,18 @@ function AgregarAlCarrito(evento) {
     if (_Existe) {
         $("#alertaCarrito").removeClass("alert-success")
         $("#alertaCarrito").addClass("alert-warning")
-        $("#alertaCarrito").text("Este evento ya está agregado en el carrito");
+        $("#alertaCarrito").text("Este producto ya está agregado en el carrito");
+        $("#alertaCarrito").show();
+        $(".loader").hide();
+        setTimeout(function () {
+            $(".loader").hide();
+        }
+            , 500);
     } else {
         $("#alertaCarrito").removeClass("alert-warning")
         $("#alertaCarrito").addClass("alert-success")
         $("#alertaCarrito").text("Se ha agregado al carrito con éxito");
+        $("#alertaCarrito").show();
         if (CarritoEventos == "") {
             CarritoEventos = evento;
         } else {

@@ -73,6 +73,10 @@
                             <HeaderStyle CssClass="warning text-center" />
                             <ItemStyle CssClass="estado info text-center" />
                         </asp:TemplateField>
+                        <asp:HyperLinkField ControlStyle-CssClass="glyphicon glyphicon-trash btn btn-danger btn-sm" DataNavigateUrlFields="ID_VENTA" HeaderText="Eliminar" DataNavigateUrlFormatString="Venta.aspx?idv={0}&o=3">
+                            <ItemStyle CssClass="info" HorizontalAlign="Center"></ItemStyle>
+                            <HeaderStyle CssClass="warning text-center" HorizontalAlign="Center" />
+                        </asp:HyperLinkField>
                     </Columns>
                 </asp:GridView>
             </div>

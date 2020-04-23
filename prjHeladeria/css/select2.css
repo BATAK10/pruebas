@@ -636,5 +636,8 @@
     border: 0 !important;
 }
 .glyphicon-2x {
+    font-size: 30px;
+}
+.glyphicon-3x {
     font-size: 40px;
 }

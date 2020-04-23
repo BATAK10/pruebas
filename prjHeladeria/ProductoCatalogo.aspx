@@ -72,20 +72,6 @@
         }
     </script>
     <style>
-        .img-row {
-            padding-top: 10px;
-        }
-
-        .img-width {
-            width: 300px !important;
-            height: 200px !important;
-        }
-
-            .img-width:hover {
-                transform: scale(1.2);
-                filter: alpha(opacity=90);
-                outline: 0;
-                opacity: .9;
-            }
+       
     </style>
 </asp:Content>

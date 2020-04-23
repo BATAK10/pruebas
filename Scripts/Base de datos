@@ -10,7 +10,9 @@ fecha_venta date,
 fecha_entrega_venta date,  
 estado_venta int, 
 costo_total_venta float, 
-usuario VARCHAR(25)
+usuario VARCHAR(25),
+pedido_por VARCHAR(50), 
+tipo_venta int
 )
 
 CREATE TABLE venta_detalle (

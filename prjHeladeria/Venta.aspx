@@ -105,6 +105,7 @@
                 $("#form-submit").text("Modificar")
             }
             if (operacion == "3") {
+                LlenarGridVentaDetalle();            
                 $("#form-submit").text("Eliminar")
             }
             if (operacion == "4") {

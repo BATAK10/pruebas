@@ -1,10 +1,12 @@
 ﻿using MySql.Data.MySqlClient;
+using Newtonsoft.Json;
 using prjHeladeria.BLL;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Web;
+using System.Web.Script.Serialization;
 using System.Web.UI.WebControls;
 
 namespace prjHeladeria
@@ -139,6 +141,32 @@ namespace prjHeladeria
                 throw;
             }
 
+        }
+
+        public static string DataTableToJson(DataTable dtDatos)
+        {
+            Dictionary<string, object> _Diccionario = new Dictionary<string, object>();
+            object[] _ArregloDatos = new object[dtDatos.Rows.Count + 1];
+
+            for (int i = 0; i <= dtDatos.Rows.Count - 1; i++)
+            {
+                _ArregloDatos[i] = dtDatos.Rows[i].ItemArray;
+            }
+            _Diccionario.Add("dato", _ArregloDatos);
+            JavaScriptSerializer json = new JavaScriptSerializer();
+            return json.Serialize(_Diccionario);
+        }
+        public static DataTable JsonToDataTable(string json)
+        {
+            try
+            {
+                DataTable dtDatos = JsonConvert.DeserializeObject<DataTable>(json);
+                return dtDatos;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
     }
 }

@@ -83,13 +83,13 @@ namespace prjHeladeria
                         else
                         {
                             // ven inner join categoria_producto cat on ven.id_categoria_producto_venta = cat.id_categoria_producto and ven.usuario = cat.usuario inner join producto pro on ven.id_producto_venta = pro.id_producto and ven.usuario = pro.usuario
-                            dtDatos = (DataTable)CargarDatos.Consultar(dtDatos, "id_venta, id_cliente_venta, DATE_FORMAT(fecha_venta,'%d/%m/%Y') AS fecha_venta,DATE_FORMAT(fecha_entrega_venta,'%Y-%m-%d') as fecha_entrega_venta, costo_total_venta, estado_venta", "venta", "id_venta,=," + _CodigoVenta + ";usuario,=," + _usuario, "", "");
+                            dtDatos = (DataTable)CargarDatos.Consultar(dtDatos, "id_venta, id_cliente_venta, fecha_venta,fecha_entrega_venta, costo_total_venta, estado_venta", "venta", "id_venta,=," + _CodigoVenta + ";usuario,=," + _usuario, "", "");
                             if (dtDatos.Rows.Count > 0)
                             {
                                 txtIdVenta.Value = dtDatos.Rows[0]["id_venta"].ToString();
                                 cmbIdClienteVenta.SelectedValue = dtDatos.Rows[0]["id_cliente_venta"].ToString();
-                                txtFechaVenta2.Value = dtDatos.Rows[0]["fecha_venta"].ToString();
-                                txtFechaEntregaVenta.Value = dtDatos.Rows[0]["fecha_entrega_venta"].ToString();
+                                txtFechaVenta2.Value = DateTime.Parse(dtDatos.Rows[0]["fecha_venta"].ToString()).ToShortDateString();
+                                txtFechaEntregaVenta.Value = DateTime.Parse(dtDatos.Rows[0]["fecha_entrega_venta"].ToString()).ToShortDateString();
                                 txtCostoTotalVenta.Value = dtDatos.Rows[0]["costo_total_venta"].ToString();
                                 cmbEstadoVenta.Value = dtDatos.Rows[0]["estado_venta"].ToString();
 
@@ -160,7 +160,7 @@ namespace prjHeladeria
                     _Venta.CostoTotalVenta = costo_total_venta;
                     _Venta.EstadoVenta = estado_venta;
                     _Venta.Usuario = usuario;
-                    _Venta.dtVentaDetalle = JsonToDataTable(venta_detalle.Replace("\\", ""));
+                    _Venta.dtVentaDetalle = Funciones.JsonToDataTable(venta_detalle.Replace("\\", ""));
                     _Venta.TipoDeOperacion = int.Parse(_Operacion);
 
                     if (_Operacion != "1")
@@ -184,31 +184,7 @@ namespace prjHeladeria
             }
             return _Mensaje;
         }
-        private static string DataTableToJson(DataTable dtDatos)
-        {
-            Dictionary<string, object> _Diccionario = new Dictionary<string, object>();
-            object[] _ArregloDatos = new object[dtDatos.Rows.Count + 1];
 
-            for (int i = 0; i <= dtDatos.Rows.Count - 1; i++)
-            {
-                _ArregloDatos[i] = dtDatos.Rows[i].ItemArray;
-            }
-            _Diccionario.Add("dato", _ArregloDatos);
-            JavaScriptSerializer json = new JavaScriptSerializer();
-            return json.Serialize(_Diccionario);
-        }
-        private static DataTable JsonToDataTable(string json)
-        {
-            try
-            {
-                DataTable dtDatos = JsonConvert.DeserializeObject<DataTable>(json);
-                return dtDatos;
-            }
-            catch (Exception ex)
-            {
-                return null;
-            }
-        }
         [WebMethod]
         public static object ObtenerProducto(string id_categoria_producto_venta, string usuario)
         {
@@ -217,7 +193,7 @@ namespace prjHeladeria
                 Funciones CargarDatos = new Funciones();
                 DataTable dtProducto = new DataTable();
                 dtProducto = (DataTable)CargarDatos.Consultar(dtProducto, "id_producto, nombre_producto", "producto", "id_categoria_producto,=," + id_categoria_producto_venta + ";usuario,=," + usuario, "", "");
-                return DataTableToJson(dtProducto);
+                return Funciones.DataTableToJson(dtProducto);
             }
             catch (Exception ex)
             {
@@ -232,7 +208,7 @@ namespace prjHeladeria
                 Funciones CargarDatos = new Funciones();
                 DataTable dtDato = new DataTable();
                 dtDato = (DataTable)CargarDatos.Consultar(dtDato, "costo_producto, cantidad_producto", "producto", "id_producto,=," + id_producto_venta + ";usuario,=," + usuario, "", "");
-                return DataTableToJson(dtDato);
+                return Funciones.DataTableToJson(dtDato);
             }
             catch (Exception ex)
             {

@@ -17,7 +17,7 @@
                 <div class="row">
                     <div class="col-md-8 col-sm-8"></div>
                     <div class="col-md-4 col-sm-4">
-                        <img style="width: 60%" class="img-circle img-responsive" src="img/helados.jpg" alt="">
+                        <img style="" class="img-circle img-responsive" src="img/helados.jpg" alt="">
                     </div>
                 </div>
             </div>
@@ -48,7 +48,7 @@
     <%}
         else
         { %>
-     <div class="heading">
+    <div class="heading">
         <h4>Bienvenido</h4>
     </div>
     <div class="row">
